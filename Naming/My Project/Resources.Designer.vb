@@ -22,7 +22,7 @@ Namespace My.Resources
     '''<summary>
     '''  A strongly-typed resource class, for looking up localized strings, etc.
     '''</summary>
-    <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "16.0.0.0"),  _
+    <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "17.0.0.0"),  _
      Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
      Global.System.Runtime.CompilerServices.CompilerGeneratedAttribute(),  _
      Global.Microsoft.VisualBasic.HideModuleNameAttribute()>  _
@@ -61,32 +61,20 @@ Namespace My.Resources
         End Property
         
         '''<summary>
-        '''  Looks up a localized resource of type System.Drawing.Bitmap.
+        '''  Looks up a localized string similar to فاتح|1*فتح|48*بقر|2*نسان|76*نسا|4*عمران|3*مائد|5*نعام|6*عراف|7*نفال|8*توب|9*يونس|10*هود|11*يوسف|12*رعد|13*براهيم|14*حجرات|49*حجر|15*نحل|16*سراء|17*كهف|18*مريم|19*نبياء|21*منون|23*نور|24*فرقان|25*شعرا|26*نمل|27*قصص|28*عنكب|29*روم|30*لقمان|31*سجد|32*حزاب|33*فاطر|35*صافات|37*فصلت|41*زمر|39*غافر|40*شور|42*زخرف|43*دخان|44*جاثي|45*حقاف|46*محمد|47*ذاري|51*طور|52*نجم|53*قمر|54*رحم|55*واقع|56*حديد|57*مجادل|58*حشر|59*ممتحن|60*جمع|62*منافقون|63*تغابن|64*طلاق|65*تحريم|66*ملك|67*قلم|68*حاق|69*حآق|69*معارج|70*نوح|71*مزمل [rest of string was truncated]&quot;;.
         '''</summary>
-        Friend ReadOnly Property FaceBook() As System.Drawing.Bitmap
+        Friend ReadOnly Property codes() As String
             Get
-                Dim obj As Object = ResourceManager.GetObject("FaceBook", resourceCulture)
-                Return CType(obj,System.Drawing.Bitmap)
+                Return ResourceManager.GetString("codes", resourceCulture)
             End Get
         End Property
         
         '''<summary>
-        '''  Looks up a localized resource of type System.Drawing.Bitmap.
+        '''  Looks up a localized string similar to العربية|الفاتحة|البقرة|آل عمران|النساء|المائدة|الأنعام|الأعراف|الأنفال|التوبة|يونس|هود|يوسف|الرعد|إبراهيم|الحجر|النحل|الإسراء|الكهف|مريم|طه|الأنبياء|الحج|المؤمنون|النور|الفرقان|الشعراء|النمل|القصص|العنكبوت|الروم|لقمان|السجدة|الأحزاب|سبأ|فاطر|يس|الصافات|ص|الزمر|غافر|فصلت|الشورى|الزخرف|الدخان|الجاثية|الأحقاف|محمد|الفتح|الحجرات|ق|الذاريات|الطور|النجم|القمر|الرحمن|الواقعة|الحديد|المجادلة|الحشر|الممتحنة|الصف|الجمعة|المنافقون|التغابن|الطلاق|التحريم|الملك|القلم|الحاقة|المعارج|نوح|الجن|المزمل|المدثر|القيامة|الإنسان [rest of string was truncated]&quot;;.
         '''</summary>
-        Friend ReadOnly Property Family_Kings_and_Queens_of_Computer() As System.Drawing.Bitmap
+        Friend ReadOnly Property translations() As String
             Get
-                Dim obj As Object = ResourceManager.GetObject("Family_Kings_and_Queens_of_Computer", resourceCulture)
-                Return CType(obj,System.Drawing.Bitmap)
-            End Get
-        End Property
-        
-        '''<summary>
-        '''  Looks up a localized resource of type System.Drawing.Bitmap.
-        '''</summary>
-        Friend ReadOnly Property Family_Kings_and_Queens_of_Computer2() As System.Drawing.Bitmap
-            Get
-                Dim obj As Object = ResourceManager.GetObject("Family_Kings_and_Queens_of_Computer2", resourceCulture)
-                Return CType(obj,System.Drawing.Bitmap)
+                Return ResourceManager.GetString("translations", resourceCulture)
             End Get
         End Property
     End Module

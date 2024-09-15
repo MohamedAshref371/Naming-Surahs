@@ -10,9 +10,9 @@ Imports System.Runtime.InteropServices
 
 <Assembly: AssemblyTitle("تسمية وترتيب سور القرآن")>
 <Assembly: AssemblyDescription("")>
-<Assembly: AssemblyCompany("Family Kings and Queens of Computer")>
+<Assembly: AssemblyCompany("Quran Reciters Corner")>
 <Assembly: AssemblyProduct("Naming and arranging the surahs of the Quran")>
-<Assembly: AssemblyCopyright("Copyright ©  2021")>
+<Assembly: AssemblyCopyright("Copyright ©  2021-2024")>
 <Assembly: AssemblyTrademark("")>
 
 <Assembly: ComVisible(False)>
@@ -31,5 +31,5 @@ Imports System.Runtime.InteropServices
 ' by using the '*' as shown below:
 ' <Assembly: AssemblyVersion("1.0.*")>
 
-<Assembly: AssemblyVersion("1.0.0.0")>
-<Assembly: AssemblyFileVersion("1.0.0.0")>
+<Assembly: AssemblyVersion("1.5.0.0")>
+<Assembly: AssemblyFileVersion("1.5.0.0")>
