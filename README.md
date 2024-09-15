@@ -2,4 +2,5 @@
 
 [Download link](https://github.com/mohamedashref371/Naming-Surahs/releases/latest)
 
-![image](https://github.com/user-attachments/assets/cea6c28d-59d1-4676-ab30-0e9fa726b6dc)
+![naming surahs](https://github.com/user-attachments/assets/451a4a31-7da7-4ae0-86e1-8cd0a2bea4dd)
+
