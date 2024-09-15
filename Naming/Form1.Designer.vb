@@ -319,6 +319,7 @@ Partial Class Form1
         Me.concat1.Name = "concat1"
         Me.concat1.Size = New System.Drawing.Size(48, 27)
         Me.concat1.TabIndex = 46
+        Me.concat1.Text = " - "
         '
         'concat2
         '
@@ -428,7 +429,7 @@ Partial Class Form1
         '
         Me.Label13.AutoSize = True
         Me.Label13.Font = New System.Drawing.Font("Tahoma", 14.0!)
-        Me.Label13.Location = New System.Drawing.Point(61, 259)
+        Me.Label13.Location = New System.Drawing.Point(288, 250)
         Me.Label13.Name = "Label13"
         Me.Label13.Size = New System.Drawing.Size(24, 23)
         Me.Label13.TabIndex = 58
@@ -438,7 +439,7 @@ Partial Class Form1
         '
         Me.concat4.Enabled = False
         Me.concat4.Font = New System.Drawing.Font("Tahoma", 12.0!)
-        Me.concat4.Location = New System.Drawing.Point(91, 255)
+        Me.concat4.Location = New System.Drawing.Point(318, 246)
         Me.concat4.Name = "concat4"
         Me.concat4.Size = New System.Drawing.Size(48, 27)
         Me.concat4.TabIndex = 57
@@ -490,7 +491,7 @@ Partial Class Form1
         Me.Icon = CType(resources.GetObject("$this.Icon"), System.Drawing.Icon)
         Me.MaximizeBox = False
         Me.Name = "Form1"
-        Me.Text = "Naming and arranging the surahs of the Quran - تسمية وترتيب سور القرآن"
+        Me.Text = "Naming and arranging the surahs of the Quran - تسمية وترتيب سور القرآن v1.5"
         Me.ResumeLayout(False)
         Me.PerformLayout()
 
