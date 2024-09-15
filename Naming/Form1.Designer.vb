@@ -35,12 +35,12 @@ Partial Class Form1
         Me.Label2 = New System.Windows.Forms.Label()
         Me.Label1 = New System.Windows.Forms.Label()
         Me.Btn2 = New System.Windows.Forms.Button()
-        Me.Btn1 = New System.Windows.Forms.Button()
+        Me.CheckBtn = New System.Windows.Forms.Button()
         Me.List = New System.Windows.Forms.ListBox()
         Me.Folder = New System.Windows.Forms.FolderBrowserDialog()
         Me.Link = New System.Windows.Forms.Label()
         Me.List2 = New System.Windows.Forms.ListBox()
-        Me.Btn3 = New System.Windows.Forms.Button()
+        Me.ExecuteBtn = New System.Windows.Forms.Button()
         Me.L8 = New System.Windows.Forms.Label()
         Me.Btn5 = New System.Windows.Forms.Button()
         Me.Btn4 = New System.Windows.Forms.Button()
@@ -179,16 +179,16 @@ Partial Class Form1
         Me.Btn2.Text = "فتح المجلد"
         Me.Btn2.UseVisualStyleBackColor = True
         '
-        'Btn1
+        'CheckBtn
         '
-        Me.Btn1.Enabled = False
-        Me.Btn1.Font = New System.Drawing.Font("Tahoma", 16.0!)
-        Me.Btn1.Location = New System.Drawing.Point(235, 391)
-        Me.Btn1.Name = "Btn1"
-        Me.Btn1.Size = New System.Drawing.Size(126, 79)
-        Me.Btn1.TabIndex = 4
-        Me.Btn1.Text = "فحص"
-        Me.Btn1.UseVisualStyleBackColor = True
+        Me.CheckBtn.Enabled = False
+        Me.CheckBtn.Font = New System.Drawing.Font("Tahoma", 16.0!)
+        Me.CheckBtn.Location = New System.Drawing.Point(235, 391)
+        Me.CheckBtn.Name = "CheckBtn"
+        Me.CheckBtn.Size = New System.Drawing.Size(126, 79)
+        Me.CheckBtn.TabIndex = 4
+        Me.CheckBtn.Text = "فحص"
+        Me.CheckBtn.UseVisualStyleBackColor = True
         '
         'List
         '
@@ -216,17 +216,17 @@ Partial Class Form1
         Me.List2.Size = New System.Drawing.Size(205, 563)
         Me.List2.TabIndex = 39
         '
-        'Btn3
+        'ExecuteBtn
         '
-        Me.Btn3.Enabled = False
-        Me.Btn3.Font = New System.Drawing.Font("Tahoma", 16.0!)
-        Me.Btn3.ForeColor = System.Drawing.Color.FromArgb(CType(CType(0, Byte), Integer), CType(CType(0, Byte), Integer), CType(CType(192, Byte), Integer))
-        Me.Btn3.Location = New System.Drawing.Point(235, 476)
-        Me.Btn3.Name = "Btn3"
-        Me.Btn3.Size = New System.Drawing.Size(126, 81)
-        Me.Btn3.TabIndex = 6
-        Me.Btn3.Text = "بدأ"
-        Me.Btn3.UseVisualStyleBackColor = True
+        Me.ExecuteBtn.Enabled = False
+        Me.ExecuteBtn.Font = New System.Drawing.Font("Tahoma", 16.0!)
+        Me.ExecuteBtn.ForeColor = System.Drawing.Color.FromArgb(CType(CType(0, Byte), Integer), CType(CType(0, Byte), Integer), CType(CType(192, Byte), Integer))
+        Me.ExecuteBtn.Location = New System.Drawing.Point(235, 476)
+        Me.ExecuteBtn.Name = "ExecuteBtn"
+        Me.ExecuteBtn.Size = New System.Drawing.Size(126, 81)
+        Me.ExecuteBtn.TabIndex = 6
+        Me.ExecuteBtn.Text = "تنفيذ"
+        Me.ExecuteBtn.UseVisualStyleBackColor = True
         '
         'L8
         '
@@ -463,7 +463,7 @@ Partial Class Form1
         Me.Controls.Add(Me.RTB)
         Me.Controls.Add(Me.Btn4)
         Me.Controls.Add(Me.Btn5)
-        Me.Controls.Add(Me.Btn3)
+        Me.Controls.Add(Me.ExecuteBtn)
         Me.Controls.Add(Me.List2)
         Me.Controls.Add(Me.Link)
         Me.Controls.Add(Me.List)
@@ -480,7 +480,7 @@ Partial Class Form1
         Me.Controls.Add(Me.Label2)
         Me.Controls.Add(Me.Label1)
         Me.Controls.Add(Me.Btn2)
-        Me.Controls.Add(Me.Btn1)
+        Me.Controls.Add(Me.CheckBtn)
         Me.Controls.Add(Me.Label13)
         Me.Controls.Add(Me.Label10)
         Me.Controls.Add(Me.Label9)
@@ -508,12 +508,12 @@ Partial Class Form1
     Friend WithEvents Label2 As Label
     Friend WithEvents Label1 As Label
     Friend WithEvents Btn2 As Button
-    Friend WithEvents Btn1 As Button
+    Friend WithEvents CheckBtn As Button
     Friend WithEvents List As ListBox
     Friend WithEvents Folder As FolderBrowserDialog
     Friend WithEvents Link As Label
     Friend WithEvents List2 As ListBox
-    Friend WithEvents Btn3 As Button
+    Friend WithEvents ExecuteBtn As Button
     Friend WithEvents L8 As Label
     Friend WithEvents Btn5 As Button
     Friend WithEvents Btn4 As Button

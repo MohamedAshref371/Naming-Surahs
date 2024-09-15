@@ -3,12 +3,12 @@
 Public Class Form1
     Dim hm As String = My.Computer.FileSystem.SpecialDirectories.AllUsersApplicationData.Replace(Application.ProductVersion, "")
     Shared SurahsNamesList As New List(Of String())
-    Dim a As Integer
-    Dim b As Integer
+    Dim idx As Integer
     Dim fmt As String
     Dim frt As String
-    Dim q As Integer
+    Dim execOrUndo As Integer
     Dim fname As String
+    Private editingTextBox As New TextBox()
 
     Private Sub Form1_Load(sender As Object, e As EventArgs) Handles MyBase.Load
         Dim temp As String() = My.Resources.translations.Split("*")
@@ -25,6 +25,11 @@ Public Class Form1
         Lang2.SelectedIndex = 1
         Lang3.SelectedIndex = 2
 
+        editingTextBox.Visible = False
+        editingTextBox.BorderStyle = BorderStyle.FixedSingle
+        AddHandler editingTextBox.Leave, AddressOf TextBox_Leave
+        Controls.Add(editingTextBox)
+
         If My.Computer.FileSystem.FileExists(hm + "lang") Then
             Lg2(sender, e)
         End If
@@ -36,10 +41,9 @@ Public Class Form1
                 CB3.Checked = True : CB4.Checked = True
             End If
             If Folder.ShowDialog = DialogResult.OK Then
-                a = -1
                 Link.Text = Folder.SelectedPath
                 List.Items.Clear() : List2.Items.Clear()
-                Btn3.Enabled = False
+                ExecuteBtn.Enabled = False
                 For Each foundFile As String In My.Computer.FileSystem.GetFiles(Folder.SelectedPath)
                     fname = My.Computer.FileSystem.GetName(foundFile)
                     Dim fi As New IO.FileInfo(fname)
@@ -51,9 +55,9 @@ Public Class Form1
                         List.Items.Add(fname)
                     End If
                 Next
-                a = List.Items.Count - 1 : q = 0
-                If a > -1 Then
-                    Btn1.Enabled = True
+                execOrUndo = 0
+                If List.Items.Count > 0 Then
+                    CheckBtn.Enabled = True
                 Else
                     If CB7.Checked = True Then
                         List.Items.Add("المجلد فارغ")
@@ -91,7 +95,7 @@ Public Class Form1
             End If
             frt += fmt
         Else
-            frt = List.Items.Item(b)
+            frt = List.Items.Item(idx)
         End If
     End Sub
 
@@ -107,7 +111,7 @@ Public Class Form1
     End Function
 
     Private Sub Bu1()
-        fname = List.Items.Item(b).ToLower.replace("َ", "").replace("ِ", "").replace("ُ", "").replace("ً", "").replace("ٍ", "").replace("ٌ", "").replace("ْ", "").replace("ّ", "").replace("'", "").replace("-", "").Replace(fmt, "")
+        fname = List.Items.Item(idx).ToLower.replace("َ", "").replace("ِ", "").replace("ُ", "").replace("ً", "").replace("ٍ", "").replace("ٌ", "").replace("ْ", "").replace("ّ", "").replace("'", "").replace("-", "").Replace(fmt, "")
         Dim num As Integer = CheckANumberInFileName(fname, 3)
         If num > 0 Then
             Surah(num)
@@ -137,59 +141,56 @@ Public Class Form1
         Surah(CheckANumberInFileName(fname, 1))
     End Sub
 
-    Private Sub Button1_Click(sender As Object, e As EventArgs) Handles Btn1.Click
+    Private Sub CheckBtn_Click(sender As Object, e As EventArgs) Handles CheckBtn.Click
+        List.SelectedIndex = -1
         List2.Items.Clear()
-        For b = 0 To a
-            Dim fi As New IO.FileInfo(List.Items.Item(b))
+        For idx = 0 To List.Items.Count - 1
+            Dim fi As New IO.FileInfo(List.Items.Item(idx))
             fmt = fi.Extension
-            If fmt = "" Then
-                fmt = "*"
-            End If
+            If fmt = "" Then fmt = "*"
             Bu1()
             List2.Items.Add(frt)
         Next
-        Btn3.Enabled = True
+        ExecuteBtn.Enabled = True
     End Sub
 
-    Private Sub Button3_Click(sender As Object, e As EventArgs) Handles Btn3.Click
-        Btn3.Enabled = False
-        If q = 0 Then
-            fname = a
+    Private Sub ExecuteBtn_Click(sender As Object, e As EventArgs) Handles ExecuteBtn.Click
+        ExecuteBtn.Enabled = False
+        If execOrUndo = 0 Then
+            fname = List.Items.Count
             fname += "
 "
-            For b = 0 To a
-                Dim fi As New IO.FileInfo(List.Items.Item(b))
+            For idx = 0 To List.Items.Count - 1
+                Dim fi As New IO.FileInfo(List.Items.Item(idx))
                 fmt = fi.Extension
-                If fmt = "" Then
-                    fmt = "*"
-                End If
-                If List.Items.Item(b) = List2.Items.Item(b) Then
+                If fmt = "" Then fmt = "*"
+                If List.Items.Item(idx) = List2.Items.Item(idx) Then
                 Else
-                    If My.Computer.FileSystem.FileExists(Link.Text + "\" + List2.Items.Item(b)) Then
-                        If My.Computer.FileSystem.FileExists(Link.Text + "\" + List2.Items.Item(b).Replace(fmt, "") + "_2" + fmt) Then
-                            List2.Items.Item(b) = List.Items.Item(b)
+                    If My.Computer.FileSystem.FileExists(Link.Text + "\" + List2.Items.Item(idx)) Then
+                        If My.Computer.FileSystem.FileExists(Link.Text + "\" + List2.Items.Item(idx).Replace(fmt, "") + "_2" + fmt) Then
+                            List2.Items.Item(idx) = List.Items.Item(idx)
                         Else
-                            My.Computer.FileSystem.RenameFile(Link.Text + "\" + List.Items.Item(b), List2.Items.Item(b).Replace(fmt, "") + "_2" + fmt)
-                            List2.Items.Item(b) = List2.Items.Item(b).Replace(fmt, "") + "_2" + fmt
+                            My.Computer.FileSystem.RenameFile(Link.Text + "\" + List.Items.Item(idx), List2.Items.Item(idx).Replace(fmt, "") + "_2" + fmt)
+                            List2.Items.Item(idx) = List2.Items.Item(idx).Replace(fmt, "") + "_2" + fmt
                         End If
                     Else
-                        My.Computer.FileSystem.RenameFile(Link.Text + "\" + List.Items.Item(b), List2.Items.Item(b))
+                        My.Computer.FileSystem.RenameFile(Link.Text + "\" + List.Items.Item(idx), List2.Items.Item(idx))
                     End If
                 End If
-                fname += List.Items.Item(b) + "
-" + List2.Items.Item(b) + "
+                fname += List.Items.Item(idx) + "
+" + List2.Items.Item(idx) + "
 "
             Next
-            If a > 0 Then
+            If List.Items.Count > 1 Then
                 My.Computer.FileSystem.WriteAllText(Link.Text + "\Name replacement process.txt", fname, False)
             End If
-            Btn1.Enabled = False
+            CheckBtn.Enabled = False
         Else
-            For b = 0 To a
-                If My.Computer.FileSystem.FileExists(Link.Text + "\" + List.Items.Item(b)) Then
-                    If My.Computer.FileSystem.FileExists(Link.Text + "\" + List2.Items.Item(b)) Then
+            For idx = 0 To List.Items.Count - 1
+                If My.Computer.FileSystem.FileExists(Link.Text + "\" + List.Items.Item(idx)) Then
+                    If My.Computer.FileSystem.FileExists(Link.Text + "\" + List2.Items.Item(idx)) Then
                     Else
-                        My.Computer.FileSystem.RenameFile(Link.Text + "\" + List.Items.Item(b), List2.Items.Item(b))
+                        My.Computer.FileSystem.RenameFile(Link.Text + "\" + List.Items.Item(idx), List2.Items.Item(idx))
                     End If
                 End If
             Next
@@ -200,19 +201,19 @@ Public Class Form1
     Private Sub Button5_Click(sender As Object, e As EventArgs) Handles Btn5.Click
         On Error Resume Next
         If Folder.ShowDialog = DialogResult.OK Then
-            a = -1
+            Dim num As Integer = -1
             Link.Text = Folder.SelectedPath
             List.Items.Clear() : List2.Items.Clear()
-            Btn1.Enabled = False : Btn3.Enabled = False
+            CheckBtn.Enabled = False : ExecuteBtn.Enabled = False
             If My.Computer.FileSystem.FileExists(Link.Text + "\Name replacement process.txt") Then
                 RTB.Text = My.Computer.FileSystem.ReadAllText(Link.Text + "\Name replacement process.txt")
-                a = RTB.Lines(0)
-                If a > 0 Then
-                    For b = 1 To a + 1
-                        List.Items.Add(RTB.Lines(2 * b))
-                        List2.Items.Add(RTB.Lines(2 * b - 1))
+                num = RTB.Lines(0)
+                If num > 0 Then
+                    For idx = 1 To num + 1
+                        List.Items.Add(RTB.Lines(2 * idx))
+                        List2.Items.Add(RTB.Lines(2 * idx - 1))
                     Next
-                    Btn3.Enabled = True : q = 1
+                    ExecuteBtn.Enabled = True : execOrUndo = 1
                 Else
                     MsgBox("هناك شيء غير صحيح
 There is something not right", vbCritical, ":(")
@@ -233,8 +234,8 @@ You haven't done anything you regret, or maybe you should regret deleting the re
             lg.Text = "عربي"
             My.Computer.FileSystem.WriteAllText(hm + "lang", "1", False)
             Btn2.Text = "Open folder"
-            Btn1.Text = "Scan"
-            Btn3.Text = "Start"
+            CheckBtn.Text = "Scan"
+            ExecuteBtn.Text = "Execute"
             Btn4.Text = "About designer"
             L9.Text = "Surah
 number"
@@ -246,8 +247,8 @@ number"
             lg.Text = "English"
             Kill(hm + "lang")
             Btn2.Text = "فتح المجلد"
-            Btn1.Text = "فحص"
-            Btn3.Text = "بدأ"
+            CheckBtn.Text = "فحص"
+            ExecuteBtn.Text = "تنفيذ"
             Btn4.Text = "عن المصمم"
             L9.Text = "رقم
 السورة"
@@ -321,5 +322,56 @@ number"
 
     Private Sub Lang3_SelectedIndexChanged(sender As Object, e As EventArgs) Handles Lang3.SelectedIndexChanged
         Langs(Lang3, Lang1, Lang2)
+    End Sub
+
+    Private Sub List_SelectedIndexChanged(sender As Object, e As EventArgs) Handles List.SelectedIndexChanged
+        If ExecuteBtn.Enabled Then
+            List2.SelectedIndex = List.SelectedIndex
+        End If
+    End Sub
+
+    Private Sub List2_SelectedIndexChanged(sender As Object, e As EventArgs) Handles List2.SelectedIndexChanged
+        List.SelectedIndex = List2.SelectedIndex
+    End Sub
+
+    Private Sub List_KeyDown(sender As Object, e As KeyEventArgs) Handles List.KeyDown
+        If e.KeyCode = Keys.Delete AndAlso List.SelectedIndex >= 0 Then
+            Dim index As Integer = List.SelectedIndex
+            If ExecuteBtn.Enabled Then
+                List2.Items.RemoveAt(index)
+                List2.SelectedIndex = -1
+            End If
+            List.Items.RemoveAt(index)
+            List.SelectedIndex = -1
+        End If
+    End Sub
+
+    Private Sub List2_KeyDown(sender As Object, e As KeyEventArgs) Handles List2.KeyDown
+        If e.KeyCode = Keys.Delete AndAlso List2.SelectedIndex >= 0 Then
+            Dim index As Integer = List2.SelectedIndex
+            List.Items.RemoveAt(index)
+            List2.Items.RemoveAt(index)
+            List.SelectedIndex = -1
+            List2.SelectedIndex = -1
+        End If
+    End Sub
+
+    Private Sub List2_DoubleClick(sender As Object, e As EventArgs) Handles List2.DoubleClick
+        If List2.SelectedIndex <> -1 Then
+            editingTextBox.Text = List2.SelectedItem.ToString()
+
+            editingTextBox.SetBounds(List2.Left, List2.GetItemRectangle(List2.SelectedIndex).Top + List2.Top, List2.Width, List2.ItemHeight)
+
+            editingTextBox.Visible = True
+            editingTextBox.BringToFront()
+            editingTextBox.Focus()
+        End If
+    End Sub
+
+    Private Sub TextBox_Leave(sender As Object, e As EventArgs)
+        If List2.SelectedIndex <> -1 Then
+            List2.Items(List2.SelectedIndex) = editingTextBox.Text
+            editingTextBox.Visible = False
+        End If
     End Sub
 End Class
