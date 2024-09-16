@@ -233,7 +233,7 @@ You haven't done anything you regret, or maybe you should regret deleting the re
             openFolderBtn.Text = "Open folder"
             checkFilesNameBtn.Text = "Scan"
             executeBtn.Text = "Execute"
-            aboutBtn.Text = "About designer"
+            aboutBtn.Text = "This Program"
             L9.Text = "Surah
 number"
             TurnOn1.Text = "Name in" : TurnOn2.Text = "Name in" : TurnOn3.Text = "Name in"
@@ -246,7 +246,7 @@ number"
             openFolderBtn.Text = "فتح المجلد"
             checkFilesNameBtn.Text = "فحص"
             executeBtn.Text = "تنفيذ"
-            aboutBtn.Text = "عن المصمم"
+            aboutBtn.Text = "هذا البرنامج"
             L9.Text = "رقم
 السورة"
             TurnOn1.Text = "الإسم بـ" : TurnOn2.Text = "الإسم بـ" : TurnOn3.Text = "الإسم بـ"

@@ -255,7 +255,7 @@ Partial Class Form1
         Me.aboutBtn.Name = "aboutBtn"
         Me.aboutBtn.Size = New System.Drawing.Size(126, 31)
         Me.aboutBtn.TabIndex = 44
-        Me.aboutBtn.Text = "عن المصمم"
+        Me.aboutBtn.Text = "هذا البرنامج"
         Me.aboutBtn.UseVisualStyleBackColor = True
         '
         'RTB
