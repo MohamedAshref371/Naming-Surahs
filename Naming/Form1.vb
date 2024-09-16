@@ -1,6 +1,4 @@
-﻿Imports System.IO
-
-Public Class Form1
+﻿Public Class Form1
     Dim hm As String = My.Computer.FileSystem.SpecialDirectories.AllUsersApplicationData.Replace(Application.ProductVersion, "")
     Shared SurahsNamesList As New List(Of String())
     Dim idx As Integer
@@ -35,15 +33,15 @@ Public Class Form1
         End If
     End Sub
 
-    Private Sub Button2_Click(sender As Object, e As EventArgs) Handles Btn2.Click
-        If CB7.Checked = True Or CB3.Checked = True Or CB4.Checked = True Then
-            If CB7.Checked = True Then
-                CB3.Checked = True : CB4.Checked = True
+    Private Sub OpenFolderBtn_Click(sender As Object, e As EventArgs) Handles openFolderBtn.Click
+        If allFilesCheckBox.Checked Or audioFilesCheckBox.Checked Or videoFilesCheckBox.Checked Then
+            If allFilesCheckBox.Checked Then
+                audioFilesCheckBox.Checked = True : videoFilesCheckBox.Checked = True
             End If
             If Folder.ShowDialog = DialogResult.OK Then
                 Link.Text = Folder.SelectedPath
                 List.Items.Clear() : List2.Items.Clear()
-                ExecuteBtn.Enabled = False
+                executeBtn.Enabled = False
                 For Each foundFile As String In My.Computer.FileSystem.GetFiles(Folder.SelectedPath)
                     fname = My.Computer.FileSystem.GetName(foundFile)
                     Dim fi As New IO.FileInfo(fname)
@@ -51,15 +49,15 @@ Public Class Form1
                     If fmt = "" Then
                         fmt = "*"
                     End If
-                    If CB7.Checked = True Or (CB3.Checked = True And ".mp3.wma.m4a.flac.aac.ape.wav.wv.dts.ac3.mmf.amr.m4r.oog.mp2.dat".Contains(fmt)) Or (CB4.Checked = True And ".mp4.kmv.avi.flv.mov.wmv.3gp.3g2.mpg.vob.ogg.webm".Contains(fmt)) Then
+                    If allFilesCheckBox.Checked Or (audioFilesCheckBox.Checked And ".mp3.wma.m4a.flac.aac.ape.wav.wv.dts.ac3.mmf.amr.m4r.oog.mp2.dat".Contains(fmt)) Or (videoFilesCheckBox.Checked And ".mp4.kmv.avi.flv.mov.wmv.3gp.3g2.mpg.vob.ogg.webm".Contains(fmt)) Then
                         List.Items.Add(fname)
                     End If
                 Next
                 execOrUndo = 0
                 If List.Items.Count > 0 Then
-                    CheckBtn.Enabled = True
+                    checkFilesNameBtn.Enabled = True
                 Else
-                    If CB7.Checked = True Then
+                    If allFilesCheckBox.Checked Then
                         List.Items.Add("المجلد فارغ")
                         List.Items.Add("The folder is empty")
                     Else
@@ -69,15 +67,7 @@ Public Class Form1
                 End If
             End If
         Else
-            CB3.Checked = True : CB4.Checked = True
-        End If
-    End Sub
-
-    Private Sub CB5_ChCh() Handles TurnOn1.CheckedChanged
-        If TurnOn1.Checked = True Then
-            Lang1.Enabled = True
-        Else
-            Lang1.Enabled = False : TurnOn2.Checked = False
+            audioFilesCheckBox.Checked = True : videoFilesCheckBox.Checked = True
         End If
     End Sub
 
@@ -110,7 +100,7 @@ Public Class Form1
         Return 0
     End Function
 
-    Private Sub Bu1()
+    Private Sub CheckSurahNumber()
         fname = List.Items.Item(idx).ToLower.replace("َ", "").replace("ِ", "").replace("ُ", "").replace("ً", "").replace("ٍ", "").replace("ٌ", "").replace("ْ", "").replace("ّ", "").replace("'", "").replace("-", "").Replace(fmt, "")
         Dim num As Integer = CheckANumberInFileName(fname, 3)
         If num > 0 Then
@@ -141,21 +131,21 @@ Public Class Form1
         Surah(CheckANumberInFileName(fname, 1))
     End Sub
 
-    Private Sub CheckBtn_Click(sender As Object, e As EventArgs) Handles CheckBtn.Click
+    Private Sub CheckFilesNameBtn_Click(sender As Object, e As EventArgs) Handles checkFilesNameBtn.Click
         List.SelectedIndex = -1
         List2.Items.Clear()
         For idx = 0 To List.Items.Count - 1
             Dim fi As New IO.FileInfo(List.Items.Item(idx))
             fmt = fi.Extension
             If fmt = "" Then fmt = "*"
-            Bu1()
+            CheckSurahNumber()
             List2.Items.Add(frt)
         Next
-        ExecuteBtn.Enabled = True
+        executeBtn.Enabled = True
     End Sub
 
-    Private Sub ExecuteBtn_Click(sender As Object, e As EventArgs) Handles ExecuteBtn.Click
-        ExecuteBtn.Enabled = False
+    Private Sub ExecuteBtn_Click(sender As Object, e As EventArgs) Handles executeBtn.Click
+        executeBtn.Enabled = False
         If execOrUndo = 0 Then
             fname = List.Items.Count
             fname += "
@@ -184,7 +174,7 @@ Public Class Form1
             If List.Items.Count > 1 Then
                 My.Computer.FileSystem.WriteAllText(Link.Text + "\Name replacement process.txt", fname, False)
             End If
-            CheckBtn.Enabled = False
+            checkFilesNameBtn.Enabled = False
         Else
             For idx = 0 To List.Items.Count - 1
                 If My.Computer.FileSystem.FileExists(Link.Text + "\" + List.Items.Item(idx)) Then
@@ -198,13 +188,13 @@ Public Class Form1
         End If
     End Sub
 
-    Private Sub Button5_Click(sender As Object, e As EventArgs) Handles Btn5.Click
+    Private Sub RegretBtn_Click(sender As Object, e As EventArgs) Handles regretBtn.Click
         On Error Resume Next
         If Folder.ShowDialog = DialogResult.OK Then
             Dim num As Integer = -1
             Link.Text = Folder.SelectedPath
             List.Items.Clear() : List2.Items.Clear()
-            CheckBtn.Enabled = False : ExecuteBtn.Enabled = False
+            checkFilesNameBtn.Enabled = False : executeBtn.Enabled = False
             If My.Computer.FileSystem.FileExists(Link.Text + "\Name replacement process.txt") Then
                 RTB.Text = My.Computer.FileSystem.ReadAllText(Link.Text + "\Name replacement process.txt")
                 num = RTB.Lines(0)
@@ -213,7 +203,7 @@ Public Class Form1
                         List.Items.Add(RTB.Lines(2 * idx))
                         List2.Items.Add(RTB.Lines(2 * idx - 1))
                     Next
-                    ExecuteBtn.Enabled = True : execOrUndo = 1
+                    executeBtn.Enabled = True : execOrUndo = 1
                 Else
                     MsgBox("هناك شيء غير صحيح
 There is something not right", vbCritical, ":(")
@@ -225,37 +215,37 @@ You haven't done anything you regret, or maybe you should regret deleting the re
         End If
     End Sub
 
-    Private Sub Button4_Click(sender As Object, e As EventArgs) Handles Btn4.Click
+    Private Sub AboutBtn_Click(sender As Object, e As EventArgs) Handles aboutBtn.Click
         Process.Start("https://github.com/mohamedashref371/naming-Surahs")
     End Sub
 
-    Private Sub Lg2(sender As Object, e As EventArgs) Handles lg.Click
-        If lg.Text = "English" Then
-            lg.Text = "عربي"
+    Private Sub Lg2(sender As Object, e As EventArgs) Handles languageBtn.Click
+        If languageBtn.Text = "English" Then
+            languageBtn.Text = "عربي"
             My.Computer.FileSystem.WriteAllText(hm + "lang", "1", False)
-            Btn2.Text = "Open folder"
-            CheckBtn.Text = "Scan"
-            ExecuteBtn.Text = "Execute"
-            Btn4.Text = "About designer"
+            openFolderBtn.Text = "Open folder"
+            checkFilesNameBtn.Text = "Scan"
+            executeBtn.Text = "Execute"
+            aboutBtn.Text = "About designer"
             L9.Text = "Surah
 number"
             TurnOn1.Text = "Name in" : TurnOn2.Text = "Name in" : TurnOn3.Text = "Name in"
             TurnOn1.RightToLeft = RightToLeft.No : TurnOn2.RightToLeft = RightToLeft.No : TurnOn3.RightToLeft = RightToLeft.No
-            CB7.Text = "All files" : CB3.Text = "Audio" : CB4.Text = "Video"
-            Btn5.Text = "I regret what I did"
+            allFilesCheckBox.Text = "All files" : audioFilesCheckBox.Text = "Audio" : videoFilesCheckBox.Text = "Video"
+            regretBtn.Text = "I regret what I did"
         Else
-            lg.Text = "English"
+            languageBtn.Text = "English"
             Kill(hm + "lang")
-            Btn2.Text = "فتح المجلد"
-            CheckBtn.Text = "فحص"
-            ExecuteBtn.Text = "تنفيذ"
-            Btn4.Text = "عن المصمم"
+            openFolderBtn.Text = "فتح المجلد"
+            checkFilesNameBtn.Text = "فحص"
+            executeBtn.Text = "تنفيذ"
+            aboutBtn.Text = "عن المصمم"
             L9.Text = "رقم
 السورة"
             TurnOn1.Text = "الإسم بـ" : TurnOn2.Text = "الإسم بـ" : TurnOn3.Text = "الإسم بـ"
             TurnOn1.RightToLeft = RightToLeft.Yes : TurnOn2.RightToLeft = RightToLeft.Yes : TurnOn3.RightToLeft = RightToLeft.Yes
-            CB7.Text = "كل الملفات" : CB3.Text = "صوت" : CB4.Text = "فيديو"
-            Btn5.Text = "أنا نادم على ما فعلت"
+            allFilesCheckBox.Text = "كل الملفات" : audioFilesCheckBox.Text = "صوت" : videoFilesCheckBox.Text = "فيديو"
+            regretBtn.Text = "أنا نادم على ما فعلت"
         End If
     End Sub
 
@@ -309,7 +299,6 @@ number"
             list.Remove(langJ.SelectedIndex)
             langK.SelectedIndex = list(0)
         End If
-
     End Sub
 
     Private Sub Lang1_SelectedIndexChanged(sender As Object, e As EventArgs) Handles Lang1.SelectedIndexChanged
@@ -325,7 +314,7 @@ number"
     End Sub
 
     Private Sub List_SelectedIndexChanged(sender As Object, e As EventArgs) Handles List.SelectedIndexChanged
-        If ExecuteBtn.Enabled Then
+        If executeBtn.Enabled Then
             List2.SelectedIndex = List.SelectedIndex
         End If
     End Sub
@@ -337,7 +326,7 @@ number"
     Private Sub List_KeyDown(sender As Object, e As KeyEventArgs) Handles List.KeyDown
         If e.KeyCode = Keys.Delete AndAlso List.SelectedIndex >= 0 Then
             Dim index As Integer = List.SelectedIndex
-            If ExecuteBtn.Enabled Then
+            If executeBtn.Enabled Then
                 List2.Items.RemoveAt(index)
                 List2.SelectedIndex = -1
             End If

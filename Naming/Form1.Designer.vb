@@ -34,21 +34,21 @@ Partial Class Form1
         Me.Label3 = New System.Windows.Forms.Label()
         Me.Label2 = New System.Windows.Forms.Label()
         Me.Label1 = New System.Windows.Forms.Label()
-        Me.Btn2 = New System.Windows.Forms.Button()
-        Me.CheckBtn = New System.Windows.Forms.Button()
+        Me.openFolderBtn = New System.Windows.Forms.Button()
+        Me.checkFilesNameBtn = New System.Windows.Forms.Button()
         Me.List = New System.Windows.Forms.ListBox()
         Me.Folder = New System.Windows.Forms.FolderBrowserDialog()
         Me.Link = New System.Windows.Forms.Label()
         Me.List2 = New System.Windows.Forms.ListBox()
-        Me.ExecuteBtn = New System.Windows.Forms.Button()
+        Me.executeBtn = New System.Windows.Forms.Button()
         Me.L8 = New System.Windows.Forms.Label()
-        Me.Btn5 = New System.Windows.Forms.Button()
-        Me.Btn4 = New System.Windows.Forms.Button()
+        Me.regretBtn = New System.Windows.Forms.Button()
+        Me.aboutBtn = New System.Windows.Forms.Button()
         Me.RTB = New System.Windows.Forms.RichTextBox()
-        Me.CB3 = New System.Windows.Forms.CheckBox()
-        Me.CB4 = New System.Windows.Forms.CheckBox()
-        Me.CB7 = New System.Windows.Forms.CheckBox()
-        Me.lg = New System.Windows.Forms.Button()
+        Me.audioFilesCheckBox = New System.Windows.Forms.CheckBox()
+        Me.videoFilesCheckBox = New System.Windows.Forms.CheckBox()
+        Me.allFilesCheckBox = New System.Windows.Forms.CheckBox()
+        Me.languageBtn = New System.Windows.Forms.Button()
         Me.concat1 = New System.Windows.Forms.TextBox()
         Me.concat2 = New System.Windows.Forms.TextBox()
         Me.Label8 = New System.Windows.Forms.Label()
@@ -169,26 +169,26 @@ Partial Class Form1
         Me.Label1.Size = New System.Drawing.Size(194, 5)
         Me.Label1.TabIndex = 21
         '
-        'Btn2
+        'openFolderBtn
         '
-        Me.Btn2.Font = New System.Drawing.Font("Tahoma", 16.0!)
-        Me.Btn2.Location = New System.Drawing.Point(12, 476)
-        Me.Btn2.Name = "Btn2"
-        Me.Btn2.Size = New System.Drawing.Size(116, 81)
-        Me.Btn2.TabIndex = 0
-        Me.Btn2.Text = "فتح المجلد"
-        Me.Btn2.UseVisualStyleBackColor = True
+        Me.openFolderBtn.Font = New System.Drawing.Font("Tahoma", 16.0!)
+        Me.openFolderBtn.Location = New System.Drawing.Point(12, 476)
+        Me.openFolderBtn.Name = "openFolderBtn"
+        Me.openFolderBtn.Size = New System.Drawing.Size(116, 81)
+        Me.openFolderBtn.TabIndex = 0
+        Me.openFolderBtn.Text = "فتح المجلد"
+        Me.openFolderBtn.UseVisualStyleBackColor = True
         '
-        'CheckBtn
+        'checkFilesNameBtn
         '
-        Me.CheckBtn.Enabled = False
-        Me.CheckBtn.Font = New System.Drawing.Font("Tahoma", 16.0!)
-        Me.CheckBtn.Location = New System.Drawing.Point(235, 391)
-        Me.CheckBtn.Name = "CheckBtn"
-        Me.CheckBtn.Size = New System.Drawing.Size(126, 79)
-        Me.CheckBtn.TabIndex = 4
-        Me.CheckBtn.Text = "فحص"
-        Me.CheckBtn.UseVisualStyleBackColor = True
+        Me.checkFilesNameBtn.Enabled = False
+        Me.checkFilesNameBtn.Font = New System.Drawing.Font("Tahoma", 16.0!)
+        Me.checkFilesNameBtn.Location = New System.Drawing.Point(235, 391)
+        Me.checkFilesNameBtn.Name = "checkFilesNameBtn"
+        Me.checkFilesNameBtn.Size = New System.Drawing.Size(126, 79)
+        Me.checkFilesNameBtn.TabIndex = 4
+        Me.checkFilesNameBtn.Text = "فحص"
+        Me.checkFilesNameBtn.UseVisualStyleBackColor = True
         '
         'List
         '
@@ -216,17 +216,17 @@ Partial Class Form1
         Me.List2.Size = New System.Drawing.Size(205, 563)
         Me.List2.TabIndex = 39
         '
-        'ExecuteBtn
+        'executeBtn
         '
-        Me.ExecuteBtn.Enabled = False
-        Me.ExecuteBtn.Font = New System.Drawing.Font("Tahoma", 16.0!)
-        Me.ExecuteBtn.ForeColor = System.Drawing.Color.FromArgb(CType(CType(0, Byte), Integer), CType(CType(0, Byte), Integer), CType(CType(192, Byte), Integer))
-        Me.ExecuteBtn.Location = New System.Drawing.Point(235, 476)
-        Me.ExecuteBtn.Name = "ExecuteBtn"
-        Me.ExecuteBtn.Size = New System.Drawing.Size(126, 81)
-        Me.ExecuteBtn.TabIndex = 6
-        Me.ExecuteBtn.Text = "تنفيذ"
-        Me.ExecuteBtn.UseVisualStyleBackColor = True
+        Me.executeBtn.Enabled = False
+        Me.executeBtn.Font = New System.Drawing.Font("Tahoma", 16.0!)
+        Me.executeBtn.ForeColor = System.Drawing.Color.FromArgb(CType(CType(0, Byte), Integer), CType(CType(0, Byte), Integer), CType(CType(192, Byte), Integer))
+        Me.executeBtn.Location = New System.Drawing.Point(235, 476)
+        Me.executeBtn.Name = "executeBtn"
+        Me.executeBtn.Size = New System.Drawing.Size(126, 81)
+        Me.executeBtn.TabIndex = 6
+        Me.executeBtn.Text = "تنفيذ"
+        Me.executeBtn.UseVisualStyleBackColor = True
         '
         'L8
         '
@@ -238,25 +238,25 @@ Partial Class Form1
         Me.L8.TabIndex = 28
         Me.L8.Text = "001"
         '
-        'Btn5
+        'regretBtn
         '
-        Me.Btn5.Font = New System.Drawing.Font("Tahoma", 14.0!)
-        Me.Btn5.ForeColor = System.Drawing.Color.FromArgb(CType(CType(192, Byte), Integer), CType(CType(0, Byte), Integer), CType(CType(0, Byte), Integer))
-        Me.Btn5.Location = New System.Drawing.Point(12, 391)
-        Me.Btn5.Name = "Btn5"
-        Me.Btn5.Size = New System.Drawing.Size(116, 79)
-        Me.Btn5.TabIndex = 11
-        Me.Btn5.Text = "أنا نادم على ما فعلت"
-        Me.Btn5.UseVisualStyleBackColor = True
+        Me.regretBtn.Font = New System.Drawing.Font("Tahoma", 14.0!)
+        Me.regretBtn.ForeColor = System.Drawing.Color.FromArgb(CType(CType(192, Byte), Integer), CType(CType(0, Byte), Integer), CType(CType(0, Byte), Integer))
+        Me.regretBtn.Location = New System.Drawing.Point(12, 391)
+        Me.regretBtn.Name = "regretBtn"
+        Me.regretBtn.Size = New System.Drawing.Size(116, 79)
+        Me.regretBtn.TabIndex = 11
+        Me.regretBtn.Text = "أنا نادم على ما فعلت"
+        Me.regretBtn.UseVisualStyleBackColor = True
         '
-        'Btn4
+        'aboutBtn
         '
-        Me.Btn4.Location = New System.Drawing.Point(235, 354)
-        Me.Btn4.Name = "Btn4"
-        Me.Btn4.Size = New System.Drawing.Size(126, 31)
-        Me.Btn4.TabIndex = 44
-        Me.Btn4.Text = "عن المصمم"
-        Me.Btn4.UseVisualStyleBackColor = True
+        Me.aboutBtn.Location = New System.Drawing.Point(235, 354)
+        Me.aboutBtn.Name = "aboutBtn"
+        Me.aboutBtn.Size = New System.Drawing.Size(126, 31)
+        Me.aboutBtn.TabIndex = 44
+        Me.aboutBtn.Text = "عن المصمم"
+        Me.aboutBtn.UseVisualStyleBackColor = True
         '
         'RTB
         '
@@ -267,50 +267,50 @@ Partial Class Form1
         Me.RTB.Text = ""
         Me.RTB.Visible = False
         '
-        'CB3
+        'audioFilesCheckBox
         '
-        Me.CB3.AutoSize = True
-        Me.CB3.Checked = True
-        Me.CB3.CheckState = System.Windows.Forms.CheckState.Checked
-        Me.CB3.Location = New System.Drawing.Point(128, 510)
-        Me.CB3.Name = "CB3"
-        Me.CB3.Size = New System.Drawing.Size(49, 17)
-        Me.CB3.TabIndex = 2
-        Me.CB3.Text = "صوت"
-        Me.CB3.UseVisualStyleBackColor = True
+        Me.audioFilesCheckBox.AutoSize = True
+        Me.audioFilesCheckBox.Checked = True
+        Me.audioFilesCheckBox.CheckState = System.Windows.Forms.CheckState.Checked
+        Me.audioFilesCheckBox.Location = New System.Drawing.Point(128, 510)
+        Me.audioFilesCheckBox.Name = "audioFilesCheckBox"
+        Me.audioFilesCheckBox.Size = New System.Drawing.Size(49, 17)
+        Me.audioFilesCheckBox.TabIndex = 2
+        Me.audioFilesCheckBox.Text = "صوت"
+        Me.audioFilesCheckBox.UseVisualStyleBackColor = True
         '
-        'CB4
+        'videoFilesCheckBox
         '
-        Me.CB4.AutoSize = True
-        Me.CB4.Checked = True
-        Me.CB4.CheckState = System.Windows.Forms.CheckState.Checked
-        Me.CB4.Location = New System.Drawing.Point(128, 533)
-        Me.CB4.Name = "CB4"
-        Me.CB4.Size = New System.Drawing.Size(49, 17)
-        Me.CB4.TabIndex = 3
-        Me.CB4.Text = "فيديو"
-        Me.CB4.UseVisualStyleBackColor = True
+        Me.videoFilesCheckBox.AutoSize = True
+        Me.videoFilesCheckBox.Checked = True
+        Me.videoFilesCheckBox.CheckState = System.Windows.Forms.CheckState.Checked
+        Me.videoFilesCheckBox.Location = New System.Drawing.Point(128, 533)
+        Me.videoFilesCheckBox.Name = "videoFilesCheckBox"
+        Me.videoFilesCheckBox.Size = New System.Drawing.Size(49, 17)
+        Me.videoFilesCheckBox.TabIndex = 3
+        Me.videoFilesCheckBox.Text = "فيديو"
+        Me.videoFilesCheckBox.UseVisualStyleBackColor = True
         '
-        'CB7
+        'allFilesCheckBox
         '
-        Me.CB7.AutoSize = True
-        Me.CB7.Location = New System.Drawing.Point(128, 487)
-        Me.CB7.Name = "CB7"
-        Me.CB7.Size = New System.Drawing.Size(77, 17)
-        Me.CB7.TabIndex = 1
-        Me.CB7.Text = "كل الملفات"
-        Me.CB7.UseVisualStyleBackColor = True
+        Me.allFilesCheckBox.AutoSize = True
+        Me.allFilesCheckBox.Location = New System.Drawing.Point(128, 487)
+        Me.allFilesCheckBox.Name = "allFilesCheckBox"
+        Me.allFilesCheckBox.Size = New System.Drawing.Size(77, 17)
+        Me.allFilesCheckBox.TabIndex = 1
+        Me.allFilesCheckBox.Text = "كل الملفات"
+        Me.allFilesCheckBox.UseVisualStyleBackColor = True
         '
-        'lg
+        'languageBtn
         '
-        Me.lg.Font = New System.Drawing.Font("Tahoma", 12.0!)
-        Me.lg.ForeColor = System.Drawing.Color.Purple
-        Me.lg.Location = New System.Drawing.Point(12, 354)
-        Me.lg.Name = "lg"
-        Me.lg.Size = New System.Drawing.Size(116, 31)
-        Me.lg.TabIndex = 7
-        Me.lg.Text = "English"
-        Me.lg.UseVisualStyleBackColor = True
+        Me.languageBtn.Font = New System.Drawing.Font("Tahoma", 12.0!)
+        Me.languageBtn.ForeColor = System.Drawing.Color.Purple
+        Me.languageBtn.Location = New System.Drawing.Point(12, 354)
+        Me.languageBtn.Name = "languageBtn"
+        Me.languageBtn.Size = New System.Drawing.Size(116, 31)
+        Me.languageBtn.TabIndex = 7
+        Me.languageBtn.Text = "English"
+        Me.languageBtn.UseVisualStyleBackColor = True
         '
         'concat1
         '
@@ -456,14 +456,14 @@ Partial Class Form1
         Me.Controls.Add(Me.Lang2)
         Me.Controls.Add(Me.concat2)
         Me.Controls.Add(Me.concat1)
-        Me.Controls.Add(Me.lg)
-        Me.Controls.Add(Me.CB7)
-        Me.Controls.Add(Me.CB4)
-        Me.Controls.Add(Me.CB3)
+        Me.Controls.Add(Me.languageBtn)
+        Me.Controls.Add(Me.allFilesCheckBox)
+        Me.Controls.Add(Me.videoFilesCheckBox)
+        Me.Controls.Add(Me.audioFilesCheckBox)
         Me.Controls.Add(Me.RTB)
-        Me.Controls.Add(Me.Btn4)
-        Me.Controls.Add(Me.Btn5)
-        Me.Controls.Add(Me.ExecuteBtn)
+        Me.Controls.Add(Me.aboutBtn)
+        Me.Controls.Add(Me.regretBtn)
+        Me.Controls.Add(Me.executeBtn)
         Me.Controls.Add(Me.List2)
         Me.Controls.Add(Me.Link)
         Me.Controls.Add(Me.List)
@@ -479,8 +479,8 @@ Partial Class Form1
         Me.Controls.Add(Me.Label3)
         Me.Controls.Add(Me.Label2)
         Me.Controls.Add(Me.Label1)
-        Me.Controls.Add(Me.Btn2)
-        Me.Controls.Add(Me.CheckBtn)
+        Me.Controls.Add(Me.openFolderBtn)
+        Me.Controls.Add(Me.checkFilesNameBtn)
         Me.Controls.Add(Me.Label13)
         Me.Controls.Add(Me.Label10)
         Me.Controls.Add(Me.Label9)
@@ -507,21 +507,21 @@ Partial Class Form1
     Friend WithEvents Label3 As Label
     Friend WithEvents Label2 As Label
     Friend WithEvents Label1 As Label
-    Friend WithEvents Btn2 As Button
-    Friend WithEvents CheckBtn As Button
+    Friend WithEvents openFolderBtn As Button
+    Friend WithEvents checkFilesNameBtn As Button
     Friend WithEvents List As ListBox
     Friend WithEvents Folder As FolderBrowserDialog
     Friend WithEvents Link As Label
     Friend WithEvents List2 As ListBox
-    Friend WithEvents ExecuteBtn As Button
+    Friend WithEvents executeBtn As Button
     Friend WithEvents L8 As Label
-    Friend WithEvents Btn5 As Button
-    Friend WithEvents Btn4 As Button
+    Friend WithEvents regretBtn As Button
+    Friend WithEvents aboutBtn As Button
     Friend WithEvents RTB As RichTextBox
-    Friend WithEvents CB3 As CheckBox
-    Friend WithEvents CB4 As CheckBox
-    Friend WithEvents CB7 As CheckBox
-    Friend WithEvents lg As Button
+    Friend WithEvents audioFilesCheckBox As CheckBox
+    Friend WithEvents videoFilesCheckBox As CheckBox
+    Friend WithEvents allFilesCheckBox As CheckBox
+    Friend WithEvents languageBtn As Button
     Friend WithEvents concat1 As TextBox
     Friend WithEvents concat2 As TextBox
     Friend WithEvents Label8 As Label
