@@ -42,6 +42,13 @@ Public Class Form1
                 Link.Text = Folder.SelectedPath
                 List.Items.Clear() : List2.Items.Clear()
                 executeBtn.Enabled = False
+
+                If File.Exists(Link.Text + "\Name replacement process.txt") AndAlso
+                    MessageBox.Show("ملف إعادة الأسماء القديمة موجود بالفعل، إذا أردت استعادتها استعمل زر الندم
+The 'Return Old Names' File already exists, if you want to restore them, use the regret button.", "😢😢😢", MessageBoxButtons.RetryCancel) = DialogResult.Cancel Then
+                    Exit Sub
+                End If
+
                 For Each foundFile As String In Directory.GetFiles(Folder.SelectedPath)
                     fname = Path.GetFileName(foundFile)
                     Dim fi As New FileInfo(fname)
