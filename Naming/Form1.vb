@@ -98,28 +98,34 @@ The 'Return Old Names' File already exists, if you want to restore them, use the
     End Sub
 
     Private Function CheckANumberInFileName(s As String, n As Integer) As Integer
-        If s.Length < n Then Return 0
+        If s.Length < n Then Return -1
 
         Dim num As Integer
         For i = 0 To s.Length - n
-            If Integer.TryParse(s.Substring(i, n), num) AndAlso num >= 1 AndAlso num <= 114 Then Return num
+            If Integer.TryParse(s.Substring(i, n), num) And num >= 0 Then Return num
         Next
 
-        Return 0
+        Return -1
     End Function
 
     Private Sub CheckSurahNumber()
         fname = List.Items.Item(idx).ToLower.replace("َ", "").replace("ِ", "").replace("ُ", "").replace("ً", "").replace("ٍ", "").replace("ٌ", "").replace("ْ", "").replace("ّ", "").replace("'", "").replace("-", "").Replace(fmt, "")
         Dim num As Integer = CheckANumberInFileName(fname, 3)
         If num > 0 Then
-            Surah(num)
-            Exit Sub
+            If num >= 1 AndAlso num <= 114 Then
+                Surah(num)
+                Exit Sub
+            Else
+                num = -5
+            End If
         End If
 
-        num = CheckANumberInFileName(fname, 2)
-        If num > 0 Then
-            Surah(num)
-            Exit Sub
+        If num > -3 Then
+            num = CheckANumberInFileName(fname, 2)
+            If num > 0 Then
+                Surah(num)
+                Exit Sub
+            End If
         End If
 
         Dim temp As String() = My.Resources.codes.Split("*")
@@ -136,7 +142,11 @@ The 'Return Old Names' File already exists, if you want to restore them, use the
             End If
         Next
 
-        Surah(CheckANumberInFileName(fname, 1))
+        If num > -3 Then
+            Surah(CheckANumberInFileName(fname, 1))
+        Else
+            Surah(0)
+        End If
     End Sub
 
     Private Sub CheckFilesNameBtn_Click(sender As Object, e As EventArgs) Handles checkFilesNameBtn.Click
