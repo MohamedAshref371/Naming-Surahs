@@ -223,7 +223,7 @@ You haven't done anything you regret, or maybe you should regret deleting the re
     End Sub
 
     Private Sub AboutBtn_Click(sender As Object, e As EventArgs) Handles aboutBtn.Click
-        Process.Start("https://github.com/mohamedashref371/naming-Surahs")
+        Process.Start("https://github.com/mohamedashref371/Naming-Surahs")
     End Sub
 
     Private Sub Lg2(sender As Object, e As EventArgs) Handles languageBtn.Click
