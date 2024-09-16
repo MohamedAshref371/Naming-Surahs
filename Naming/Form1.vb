@@ -1,4 +1,6 @@
-﻿Public Class Form1
+﻿Imports System.IO
+
+Public Class Form1
     Dim hm As String = My.Computer.FileSystem.SpecialDirectories.AllUsersApplicationData.Replace(Application.ProductVersion, "")
     Shared SurahsNamesList As New List(Of String())
     Dim idx As Integer
@@ -6,7 +8,7 @@
     Dim frt As String
     Dim execOrUndo As Integer
     Dim fname As String
-    Private editingTextBox As New TextBox()
+    Private editingTextBox As New TextBox
 
     Private Sub Form1_Load(sender As Object, e As EventArgs) Handles MyBase.Load
         Dim temp As String() = My.Resources.translations.Split("*")
@@ -28,9 +30,7 @@
         AddHandler editingTextBox.Leave, AddressOf TextBox_Leave
         Controls.Add(editingTextBox)
 
-        If My.Computer.FileSystem.FileExists(hm + "lang") Then
-            Lg2(sender, e)
-        End If
+        If File.Exists(hm + "lang") Then Lg2(sender, e)
     End Sub
 
     Private Sub OpenFolderBtn_Click(sender As Object, e As EventArgs) Handles openFolderBtn.Click
@@ -42,14 +42,14 @@
                 Link.Text = Folder.SelectedPath
                 List.Items.Clear() : List2.Items.Clear()
                 executeBtn.Enabled = False
-                For Each foundFile As String In My.Computer.FileSystem.GetFiles(Folder.SelectedPath)
-                    fname = My.Computer.FileSystem.GetName(foundFile)
-                    Dim fi As New IO.FileInfo(fname)
+                For Each foundFile As String In Directory.GetFiles(Folder.SelectedPath)
+                    fname = Path.GetFileName(foundFile)
+                    Dim fi As New FileInfo(fname)
                     fmt = fi.Extension.ToLower
-                    If fmt = "" Then
-                        fmt = "*"
-                    End If
-                    If allFilesCheckBox.Checked Or (audioFilesCheckBox.Checked And ".mp3.wma.m4a.flac.aac.ape.wav.wv.dts.ac3.mmf.amr.m4r.oog.mp2.dat".Contains(fmt)) Or (videoFilesCheckBox.Checked And ".mp4.kmv.avi.flv.mov.wmv.3gp.3g2.mpg.vob.ogg.webm".Contains(fmt)) Then
+                    If fmt = "" Then fmt = "*"
+                    If allFilesCheckBox.Checked OrElse
+                        audioFilesCheckBox.Checked AndAlso ".mp3.wma.m4a.flac.aac.ape.wav.wv.dts.ac3.mmf.amr.m4r.oog.mp2.dat".Contains(fmt) OrElse
+                        videoFilesCheckBox.Checked AndAlso ".mp4.kmv.avi.flv.mov.wmv.3gp.3g2.mpg.vob.ogg.webm".Contains(fmt) Then
                         List.Items.Add(fname)
                     End If
                 Next
@@ -135,7 +135,7 @@
         List.SelectedIndex = -1
         List2.Items.Clear()
         For idx = 0 To List.Items.Count - 1
-            Dim fi As New IO.FileInfo(List.Items.Item(idx))
+            Dim fi As New FileInfo(List.Items.Item(idx))
             fmt = fi.Extension
             If fmt = "" Then fmt = "*"
             CheckSurahNumber()
@@ -151,20 +151,20 @@
             fname += "
 "
             For idx = 0 To List.Items.Count - 1
-                Dim fi As New IO.FileInfo(List.Items.Item(idx))
+                Dim fi As New FileInfo(List.Items.Item(idx))
                 fmt = fi.Extension
                 If fmt = "" Then fmt = "*"
                 If List.Items.Item(idx) = List2.Items.Item(idx) Then
                 Else
-                    If My.Computer.FileSystem.FileExists(Link.Text + "\" + List2.Items.Item(idx)) Then
-                        If My.Computer.FileSystem.FileExists(Link.Text + "\" + List2.Items.Item(idx).Replace(fmt, "") + "_2" + fmt) Then
+                    If File.Exists(Link.Text + "\" + List2.Items.Item(idx)) Then
+                        If File.Exists(Link.Text + "\" + List2.Items.Item(idx).Replace(fmt, "") + "_2" + fmt) Then
                             List2.Items.Item(idx) = List.Items.Item(idx)
                         Else
-                            My.Computer.FileSystem.RenameFile(Link.Text + "\" + List.Items.Item(idx), List2.Items.Item(idx).Replace(fmt, "") + "_2" + fmt)
+                            File.Move(Link.Text + "\" + List.Items.Item(idx), List2.Items.Item(idx).Replace(fmt, "") + "_2" + fmt)
                             List2.Items.Item(idx) = List2.Items.Item(idx).Replace(fmt, "") + "_2" + fmt
                         End If
                     Else
-                        My.Computer.FileSystem.RenameFile(Link.Text + "\" + List.Items.Item(idx), List2.Items.Item(idx))
+                        File.Move(Link.Text + "\" + List.Items.Item(idx), List2.Items.Item(idx))
                     End If
                 End If
                 fname += List.Items.Item(idx) + "
@@ -172,19 +172,19 @@
 "
             Next
             If List.Items.Count > 1 Then
-                My.Computer.FileSystem.WriteAllText(Link.Text + "\Name replacement process.txt", fname, False)
+                File.WriteAllText(Link.Text + "\Name replacement process.txt", fname)
             End If
             checkFilesNameBtn.Enabled = False
         Else
             For idx = 0 To List.Items.Count - 1
-                If My.Computer.FileSystem.FileExists(Link.Text + "\" + List.Items.Item(idx)) Then
-                    If My.Computer.FileSystem.FileExists(Link.Text + "\" + List2.Items.Item(idx)) Then
+                If File.Exists(Link.Text + "\" + List.Items.Item(idx)) Then
+                    If File.Exists(Link.Text + "\" + List2.Items.Item(idx)) Then
                     Else
-                        My.Computer.FileSystem.RenameFile(Link.Text + "\" + List.Items.Item(idx), List2.Items.Item(idx))
+                        File.Move(Link.Text + "\" + List.Items.Item(idx), List2.Items.Item(idx))
                     End If
                 End If
             Next
-            My.Computer.FileSystem.DeleteFile(Link.Text + "\Name replacement process.txt")
+            File.Delete(Link.Text + "\Name replacement process.txt")
         End If
     End Sub
 
@@ -195,8 +195,8 @@
             Link.Text = Folder.SelectedPath
             List.Items.Clear() : List2.Items.Clear()
             checkFilesNameBtn.Enabled = False : executeBtn.Enabled = False
-            If My.Computer.FileSystem.FileExists(Link.Text + "\Name replacement process.txt") Then
-                RTB.Text = My.Computer.FileSystem.ReadAllText(Link.Text + "\Name replacement process.txt")
+            If File.Exists(Link.Text + "\Name replacement process.txt") Then
+                RTB.Text = File.ReadAllText(Link.Text + "\Name replacement process.txt")
                 num = RTB.Lines(0)
                 If num > 0 Then
                     For idx = 1 To num + 1
@@ -209,7 +209,7 @@
 There is something not right", vbCritical, ":(")
                 End If
             Else
-                MsgBox("لم تفعل شيئاً تندم عليه أو ربما عليك أن تندم أيضاً على قيامك حذف ملف الندم هههههههه
+                MsgBox("لم تفعل شيئاً تندم عليه أو ربما عليك أن تندم أيضاً على قيامك بحذف ملف الندم هههههههه
 You haven't done anything you regret, or maybe you should regret deleting the regret file hahahaha", vbInformation, "😢😢😢")
             End If
         End If
@@ -222,7 +222,7 @@ You haven't done anything you regret, or maybe you should regret deleting the re
     Private Sub Lg2(sender As Object, e As EventArgs) Handles languageBtn.Click
         If languageBtn.Text = "English" Then
             languageBtn.Text = "عربي"
-            My.Computer.FileSystem.WriteAllText(hm + "lang", "1", False)
+            File.WriteAllText(hm + "lang", "1")
             openFolderBtn.Text = "Open folder"
             checkFilesNameBtn.Text = "Scan"
             executeBtn.Text = "Execute"
