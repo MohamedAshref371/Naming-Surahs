@@ -178,11 +178,11 @@ The 'Return Old Names' File already exists, if you want to restore them, use the
                         If File.Exists(Link.Text + "\" + List2.Items.Item(idx).Replace(fmt, "") + "_2" + fmt) Then
                             List2.Items.Item(idx) = List.Items.Item(idx)
                         Else
-                            File.Move(Link.Text + "\" + List.Items.Item(idx), Link.Text + "\" + List2.Items.Item(idx).Replace(fmt, "") + "_2" + fmt)
                             List2.Items.Item(idx) = List2.Items.Item(idx).Replace(fmt, "") + "_2" + fmt
+                            RenameFile()
                         End If
                     Else
-                        File.Move(Link.Text + "\" + List.Items.Item(idx), Link.Text + "\" + List2.Items.Item(idx))
+                        RenameFile()
                     End If
                 End If
                 fname += List.Items.Item(idx) + "
@@ -196,14 +196,25 @@ The 'Return Old Names' File already exists, if you want to restore them, use the
         Else
             For idx = 0 To List.Items.Count - 1
                 If File.Exists(Link.Text + "\" + List.Items.Item(idx)) Then
-                    If File.Exists(Link.Text + "\" + List2.Items.Item(idx)) Then
-                    Else
-                        File.Move(Link.Text + "\" + List.Items.Item(idx), Link.Text + "\" + List2.Items.Item(idx))
+                    If Not File.Exists(Link.Text + "\" + List2.Items.Item(idx)) Then
+                        RenameFile()
                     End If
                 End If
             Next
             File.Delete(Link.Text + "\Name replacement process.txt")
         End If
+    End Sub
+
+    Private Sub RenameFile()
+        Try
+            File.Move(Link.Text + "\" + List.Items.Item(idx), Link.Text + "\" + List2.Items.Item(idx))
+        Catch ex As IOException
+            MessageBox.Show($"فشل في تسمية الملف من {List.Items.Item(idx)}
+إلى {List2.Items.Item(idx)}
+
+Failed to name file from {List.Items.Item(idx)}
+To {List2.Items.Item(idx)}", "😢😢😢")
+        End Try
     End Sub
 
     Private Sub RegretBtn_Click(sender As Object, e As EventArgs) Handles regretBtn.Click
