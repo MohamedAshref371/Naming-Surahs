@@ -160,11 +160,11 @@ Public Class Form1
                         If File.Exists(Link.Text + "\" + List2.Items.Item(idx).Replace(fmt, "") + "_2" + fmt) Then
                             List2.Items.Item(idx) = List.Items.Item(idx)
                         Else
-                            File.Move(Link.Text + "\" + List.Items.Item(idx), List2.Items.Item(idx).Replace(fmt, "") + "_2" + fmt)
+                            File.Move(Link.Text + "\" + List.Items.Item(idx), Link.Text + "\" + List2.Items.Item(idx).Replace(fmt, "") + "_2" + fmt)
                             List2.Items.Item(idx) = List2.Items.Item(idx).Replace(fmt, "") + "_2" + fmt
                         End If
                     Else
-                        File.Move(Link.Text + "\" + List.Items.Item(idx), List2.Items.Item(idx))
+                        File.Move(Link.Text + "\" + List.Items.Item(idx), Link.Text + "\" + List2.Items.Item(idx))
                     End If
                 End If
                 fname += List.Items.Item(idx) + "
@@ -180,7 +180,7 @@ Public Class Form1
                 If File.Exists(Link.Text + "\" + List.Items.Item(idx)) Then
                     If File.Exists(Link.Text + "\" + List2.Items.Item(idx)) Then
                     Else
-                        File.Move(Link.Text + "\" + List.Items.Item(idx), List2.Items.Item(idx))
+                        File.Move(Link.Text + "\" + List.Items.Item(idx), Link.Text + "\" + List2.Items.Item(idx))
                     End If
                 End If
             Next
