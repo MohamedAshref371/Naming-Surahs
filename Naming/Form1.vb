@@ -88,7 +88,7 @@ The 'Return Old Names' File already exists, if you want to restore them, use the
                 frt += SurahsNamesList(Lang2.SelectedIndex)(num) + concat3.Text
             End If
             If TurnOn3.Checked = True Then
-                frt += SurahsNamesList(Lang2.SelectedIndex)(num) + concat4.Text
+                frt += SurahsNamesList(Lang3.SelectedIndex)(num) + concat4.Text
             End If
             frt += fmt
         Else
