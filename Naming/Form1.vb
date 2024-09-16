@@ -28,6 +28,7 @@ Public Class Form1
         editingTextBox.Visible = False
         editingTextBox.BorderStyle = BorderStyle.FixedSingle
         AddHandler editingTextBox.Leave, AddressOf TextBox_Leave
+        AddHandler editingTextBox.KeyPress, AddressOf Controls_KeyPress
         Controls.Add(editingTextBox)
 
         If File.Exists(hm + "lang") Then Lg2(sender, e)
@@ -368,6 +369,12 @@ number"
         If List2.SelectedIndex <> -1 Then
             List2.Items(List2.SelectedIndex) = editingTextBox.Text
             editingTextBox.Visible = False
+        End If
+    End Sub
+
+    Private Sub Controls_KeyPress(sender As Object, e As KeyPressEventArgs) Handles concat1.KeyPress, concat2.KeyPress, concat3.KeyPress, concat4.KeyPress
+        If "\/:*?""<>|".Contains(e.KeyChar) Then
+            e.KeyChar = ""
         End If
     End Sub
 End Class
