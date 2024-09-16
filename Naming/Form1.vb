@@ -28,7 +28,7 @@ Public Class Form1
         editingTextBox.Visible = False
         editingTextBox.BorderStyle = BorderStyle.FixedSingle
         AddHandler editingTextBox.Leave, AddressOf TextBox_Leave
-        AddHandler editingTextBox.KeyPress, AddressOf Controls_KeyPress
+        AddHandler editingTextBox.KeyPress, AddressOf TextBoxes_KeyPress
         Controls.Add(editingTextBox)
 
         If File.Exists(hm + "lang") Then Lg2(sender, e)
@@ -372,7 +372,7 @@ number"
         End If
     End Sub
 
-    Private Sub Controls_KeyPress(sender As Object, e As KeyPressEventArgs) Handles concat1.KeyPress, concat2.KeyPress, concat3.KeyPress, concat4.KeyPress
+    Private Sub TextBoxes_KeyPress(sender As Object, e As KeyPressEventArgs) Handles concat1.KeyPress, concat2.KeyPress, concat3.KeyPress, concat4.KeyPress
         If "\/:*?""<>|".Contains(e.KeyChar) Then
             e.KeyChar = ""
         End If
