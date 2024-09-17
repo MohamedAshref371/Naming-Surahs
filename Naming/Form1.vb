@@ -28,7 +28,8 @@ Public Class Form1
 
         editingTextBox.Visible = False
         editingTextBox.BorderStyle = BorderStyle.FixedSingle
-        AddHandler editingTextBox.Leave, AddressOf TextBox_Leave
+        AddHandler editingTextBox.Leave, AddressOf EditingTextBox_Leave
+        AddHandler editingTextBox.KeyDown, AddressOf EditingTextBox_KeyDown
         AddHandler editingTextBox.KeyPress, AddressOf TextBoxes_KeyPress
         Controls.Add(editingTextBox)
 
@@ -404,9 +405,18 @@ number"
         End If
     End Sub
 
-    Private Sub TextBox_Leave(sender As Object, e As EventArgs)
-        If List2.SelectedIndex <> -1 Then
+    Private Sub EditingTextBox_Leave(sender As Object, e As EventArgs)
+        If List2.SelectedIndex <> -1 And editingTextBox.Text.Trim <> "" Then
             List2.Items(List2.SelectedIndex) = editingTextBox.Text
+        End If
+        editingTextBox.Visible = False
+    End Sub
+
+    Private Sub EditingTextBox_KeyDown(sender As Object, e As KeyEventArgs)
+        If e.KeyCode = Keys.Enter Then
+            If List2.SelectedIndex <> -1 And editingTextBox.Text.Trim <> "" Then
+                List2.Items(List2.SelectedIndex) = editingTextBox.Text
+            End If
             editingTextBox.Visible = False
         End If
     End Sub
