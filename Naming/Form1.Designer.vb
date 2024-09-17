@@ -482,7 +482,7 @@ Partial Class Form1
         Me.Icon = CType(resources.GetObject("$this.Icon"), System.Drawing.Icon)
         Me.MaximizeBox = False
         Me.Name = "Form1"
-        Me.Text = "Naming and arranging the surahs of the Quran - تسمية وترتيب سور القرآن v1.9"
+        Me.Text = "Naming and arranging the surahs of the Quran - تسمية وترتيب سور القرآن v2.0"
         Me.ResumeLayout(False)
         Me.PerformLayout()
 
