@@ -361,7 +361,7 @@ number"
     End Sub
 
     Private Sub List_SelectedIndexChanged(sender As Object, e As EventArgs) Handles List.SelectedIndexChanged
-        If executeBtn.Enabled Then
+        If List2.Items.Count = List.Items.Count Then
             List2.SelectedIndex = List.SelectedIndex
         End If
     End Sub
@@ -373,7 +373,7 @@ number"
     Private Sub List_KeyDown(sender As Object, e As KeyEventArgs) Handles List.KeyDown
         If e.KeyCode = Keys.Delete AndAlso List.SelectedIndex >= 0 Then
             Dim index As Integer = List.SelectedIndex
-            If executeBtn.Enabled Then
+            If List2.Items.Count = List.Items.Count Then
                 List2.Items.RemoveAt(index)
                 List2.SelectedIndex = -1
             End If
