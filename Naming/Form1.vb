@@ -42,6 +42,7 @@ Public Class Form1
             End If
             If Folder.ShowDialog = DialogResult.OK Then
                 Link.Text = Folder.SelectedPath
+                warningItemsList.Clear() : notExistItemsList.Clear() : errorItemsList.Clear()
                 List.Items.Clear() : List2.Items.Clear()
                 executeBtn.Enabled = False
 
@@ -164,49 +165,49 @@ The 'Return Old Names' File already exists, if you want to restore them, use the
             For idx = 0 To List.Items.Count - 1
                 fmt = Path.GetExtension(List.Items.Item(idx))
                 If fmt = "" Then fmt = "*"
-                If List.Items.Item(idx) = List2.Items.Item(idx) Then
-                Else
-                    If File.Exists(Link.Text + "\" + List2.Items.Item(idx)) Then
-                        For i = 0 To 9
-                            If Not File.Exists($"{Link.Text}\{List2.Items.Item(idx).Replace(fmt, "")}_{i}{fmt}") Then
-                                List2.Items.Item(idx) = $"{List2.Items.Item(idx).Replace(fmt, "")}_{i}{fmt}"
-                                RenameFile()
-                                Exit For
-                            End If
-                            If i = 9 Then
-                                List2.Items.Item(idx) = List.Items.Item(idx)
-                            End If
-                        Next
-                    Else
-                        RenameFile()
-                    End If
-                End If
+                RenameFile()
                 fname += List.Items.Item(idx) + "|" + List2.Items.Item(idx) + "*"
             Next
-            If List.Items.Count > 1 Then
-                File.WriteAllText(Link.Text + "\Name replacement process.txt", fname)
-            End If
+            If List.Items.Count > 0 Then File.WriteAllText(Link.Text + "\Name replacement process.txt", fname)
             checkFilesNameBtn.Enabled = False
         Else
             For idx = 0 To List.Items.Count - 1
-                If File.Exists(Link.Text + "\" + List.Items.Item(idx)) Then
-                    If Not File.Exists(Link.Text + "\" + List2.Items.Item(idx)) Then
-                        RenameFile()
-                    Else
-                        '
-                    End If
-                End If
+                RenameFile()
             Next
             File.Delete(Link.Text + "\Name replacement process.txt")
         End If
+        List.Invalidate() : List2.Invalidate()
     End Sub
 
+    Shared warningItemsList As New List(Of Integer)
+    Shared notExistItemsList As New List(Of Integer)
+    Shared errorItemsList As New List(Of Integer)
     Private Sub RenameFile()
         Try
-            If List2.Items.Item(idx) <> List.Items.Item(idx) Then
-                File.Move(Link.Text + "\" + List.Items.Item(idx), Link.Text + "\" + List2.Items.Item(idx))
+            If List2.Items.Item(idx) = List.Items.Item(idx) Then
+                warningItemsList.Add(idx)
+            Else
+                If File.Exists(Link.Text + "\" + List.Items.Item(idx)) Then
+                    If File.Exists(Link.Text + "\" + List2.Items.Item(idx)) Then
+                        List2.Items.Item(idx) = List.Items.Item(idx)
+                        For i = 0 To 9
+                            If Not File.Exists($"{Link.Text}\{List2.Items.Item(idx).Replace(fmt, "")}_{i}{fmt}") Then
+                                List2.Items.Item(idx) = $"{List2.Items.Item(idx).Replace(fmt, "")}_{i}{fmt}"
+                                Exit For
+                            End If
+                        Next
+                    End If
+                    If List2.Items.Item(idx) = List.Items.Item(idx) Then
+                        warningItemsList.Add(idx)
+                    Else
+                        File.Move(Link.Text + "\" + List.Items.Item(idx), Link.Text + "\" + List2.Items.Item(idx))
+                    End If
+                Else
+                    notExistItemsList.Add(idx)
+                End If
             End If
         Catch ex As IOException
+            errorItemsList.Add(idx)
             MessageBox.Show($"فشل في تسمية الملف من {List.Items.Item(idx)}
 إلى {List2.Items.Item(idx)}
 
@@ -215,10 +216,32 @@ To {List2.Items.Item(idx)}", "😢😢😢")
         End Try
     End Sub
 
+    Private Sub ListBox_DrawItem(sender As Object, e As DrawItemEventArgs) Handles List.DrawItem, List2.DrawItem
+        If e.Index < 0 Then Return
+
+        Dim backgroundColor As Color
+        If warningItemsList.Contains(e.Index) Then
+            backgroundColor = Color.Yellow
+        ElseIf notExistItemsList.Contains(e.Index) Then
+            backgroundColor = Color.Orange
+        ElseIf errorItemsList.Contains(e.Index) Then
+            backgroundColor = Color.Red
+        Else
+            backgroundColor = e.BackColor
+        End If
+
+        e.Graphics.FillRectangle(New SolidBrush(backgroundColor), e.Bounds)
+
+        e.Graphics.DrawString(sender.Items(e.Index).ToString(), e.Font, Brushes.Black, e.Bounds)
+
+        e.DrawFocusRectangle()
+    End Sub
+
     Private Sub RegretBtn_Click(sender As Object, e As EventArgs) Handles regretBtn.Click
         On Error Resume Next
         If Folder.ShowDialog = DialogResult.OK Then
             Link.Text = Folder.SelectedPath
+            warningItemsList.Clear() : notExistItemsList.Clear() : errorItemsList.Clear()
             List.Items.Clear() : List2.Items.Clear()
             checkFilesNameBtn.Enabled = False : executeBtn.Enabled = False
             If File.Exists(Link.Text + "\Name replacement process.txt") Then
@@ -229,9 +252,6 @@ To {List2.Items.Item(idx)}", "😢😢😢")
                     If arr2.Length = 2 Then
                         List.Items.Add(arr2(1))
                         List2.Items.Add(arr2(0))
-                    Else
-                        '                        MsgBox("هناك شيء غير صحيح
-                        'There is something not right", vbCritical, ":(")
                     End If
                 Next
                 executeBtn.Enabled = True : execOrUndo = 1
@@ -373,7 +393,7 @@ number"
     End Sub
 
     Private Sub List2_DoubleClick(sender As Object, e As EventArgs) Handles List2.DoubleClick
-        If List2.SelectedIndex <> -1 Then
+        If executeBtn.Enabled And List2.SelectedIndex <> -1 Then
             editingTextBox.Text = List2.SelectedItem.ToString()
 
             editingTextBox.SetBounds(List2.Left, List2.GetItemRectangle(List2.SelectedIndex).Top + List2.Top, List2.Width, List2.ItemHeight)

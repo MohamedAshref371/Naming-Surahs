@@ -44,7 +44,6 @@ Partial Class Form1
         Me.L8 = New System.Windows.Forms.Label()
         Me.regretBtn = New System.Windows.Forms.Button()
         Me.aboutBtn = New System.Windows.Forms.Button()
-        Me.RTB = New System.Windows.Forms.RichTextBox()
         Me.audioFilesCheckBox = New System.Windows.Forms.CheckBox()
         Me.videoFilesCheckBox = New System.Windows.Forms.CheckBox()
         Me.allFilesCheckBox = New System.Windows.Forms.CheckBox()
@@ -192,6 +191,7 @@ Partial Class Form1
         '
         'List
         '
+        Me.List.DrawMode = System.Windows.Forms.DrawMode.OwnerDrawFixed
         Me.List.FormattingEnabled = True
         Me.List.Location = New System.Drawing.Point(381, 5)
         Me.List.Name = "List"
@@ -210,6 +210,7 @@ Partial Class Form1
         '
         'List2
         '
+        Me.List2.DrawMode = System.Windows.Forms.DrawMode.OwnerDrawFixed
         Me.List2.FormattingEnabled = True
         Me.List2.Location = New System.Drawing.Point(592, 5)
         Me.List2.Name = "List2"
@@ -257,15 +258,6 @@ Partial Class Form1
         Me.aboutBtn.TabIndex = 44
         Me.aboutBtn.Text = "هذا البرنامج"
         Me.aboutBtn.UseVisualStyleBackColor = True
-        '
-        'RTB
-        '
-        Me.RTB.Location = New System.Drawing.Point(442, 5)
-        Me.RTB.Name = "RTB"
-        Me.RTB.Size = New System.Drawing.Size(86, 563)
-        Me.RTB.TabIndex = 45
-        Me.RTB.Text = ""
-        Me.RTB.Visible = False
         '
         'audioFilesCheckBox
         '
@@ -460,7 +452,6 @@ Partial Class Form1
         Me.Controls.Add(Me.allFilesCheckBox)
         Me.Controls.Add(Me.videoFilesCheckBox)
         Me.Controls.Add(Me.audioFilesCheckBox)
-        Me.Controls.Add(Me.RTB)
         Me.Controls.Add(Me.aboutBtn)
         Me.Controls.Add(Me.regretBtn)
         Me.Controls.Add(Me.executeBtn)
@@ -517,7 +508,6 @@ Partial Class Form1
     Friend WithEvents L8 As Label
     Friend WithEvents regretBtn As Button
     Friend WithEvents aboutBtn As Button
-    Friend WithEvents RTB As RichTextBox
     Friend WithEvents audioFilesCheckBox As CheckBox
     Friend WithEvents videoFilesCheckBox As CheckBox
     Friend WithEvents allFilesCheckBox As CheckBox
