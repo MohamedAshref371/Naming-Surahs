@@ -1,5 +1,4 @@
 ﻿Imports System.IO
-Imports System.Reflection
 
 Public Class Form1
     Dim hm As String = My.Computer.FileSystem.SpecialDirectories.AllUsersApplicationData.Replace(Application.ProductVersion, "")
@@ -403,6 +402,14 @@ number"
             editingTextBox.BringToFront()
             editingTextBox.Focus()
         End If
+    End Sub
+
+    Private Sub List_TopIndexChanged(sender As Object, e As EventArgs) Handles List.MouseCaptureChanged, List.MouseWheel
+        List2.TopIndex = List.TopIndex
+    End Sub
+
+    Private Sub List2_TopIndexChanged(sender As Object, e As EventArgs) Handles List2.MouseCaptureChanged, List2.MouseWheel
+        List.TopIndex = List2.TopIndex
     End Sub
 
     Private Sub EditingTextBox_Leave(sender As Object, e As EventArgs)
