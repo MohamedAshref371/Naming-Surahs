@@ -1,4 +1,5 @@
 ﻿Imports System.IO
+Imports System.Reflection
 
 Public Class Form1
     Dim hm As String = My.Computer.FileSystem.SpecialDirectories.AllUsersApplicationData.Replace(Application.ProductVersion, "")
@@ -52,8 +53,7 @@ The 'Return Old Names' File already exists, if you want to restore them, use the
 
                 For Each foundFile As String In Directory.GetFiles(Folder.SelectedPath)
                     fname = Path.GetFileName(foundFile)
-                    Dim fi As New FileInfo(fname)
-                    fmt = fi.Extension.ToLower
+                    fmt = Path.GetExtension(fname).ToLower
                     If fmt = "" Then fmt = "*"
                     If allFilesCheckBox.Checked OrElse
                         audioFilesCheckBox.Checked AndAlso ".mp3.wma.m4a.flac.aac.ape.wav.wv.dts.ac3.mmf.amr.m4r.oog.mp2.dat".Contains(fmt) OrElse
@@ -82,15 +82,11 @@ The 'Return Old Names' File already exists, if you want to restore them, use the
     Private Sub Surah(num As Integer)
         If num > 0 Then
             frt = num.ToString.PadLeft(3, "0")
-            If TurnOn1.Checked = True Then
-                frt += concat1.Text + SurahsNamesList(Lang1.SelectedIndex)(num) + concat2.Text
-            End If
-            If TurnOn2.Checked = True Then
-                frt += SurahsNamesList(Lang2.SelectedIndex)(num) + concat3.Text
-            End If
-            If TurnOn3.Checked = True Then
-                frt += SurahsNamesList(Lang3.SelectedIndex)(num) + concat4.Text
-            End If
+
+            If TurnOn1.Checked Then frt += concat1.Text + SurahsNamesList(Lang1.SelectedIndex)(num) + concat2.Text
+            If TurnOn2.Checked Then frt += SurahsNamesList(Lang2.SelectedIndex)(num) + concat3.Text
+            If TurnOn3.Checked Then frt += SurahsNamesList(Lang3.SelectedIndex)(num) + concat4.Text
+
             frt += fmt
         Else
             frt = List.Items.Item(idx)
@@ -153,8 +149,7 @@ The 'Return Old Names' File already exists, if you want to restore them, use the
         List.SelectedIndex = -1
         List2.Items.Clear()
         For idx = 0 To List.Items.Count - 1
-            Dim fi As New FileInfo(List.Items.Item(idx))
-            fmt = fi.Extension
+            fmt = Path.GetExtension(List.Items.Item(idx))
             If fmt = "" Then fmt = "*"
             CheckSurahNumber()
             List2.Items.Add(frt)
@@ -165,29 +160,27 @@ The 'Return Old Names' File already exists, if you want to restore them, use the
     Private Sub ExecuteBtn_Click(sender As Object, e As EventArgs) Handles executeBtn.Click
         executeBtn.Enabled = False
         If execOrUndo = 0 Then
-            fname = List.Items.Count
-            fname += "
-"
             For idx = 0 To List.Items.Count - 1
-                Dim fi As New FileInfo(List.Items.Item(idx))
-                fmt = fi.Extension
+                fmt = Path.GetExtension(List.Items.Item(idx))
                 If fmt = "" Then fmt = "*"
                 If List.Items.Item(idx) = List2.Items.Item(idx) Then
                 Else
                     If File.Exists(Link.Text + "\" + List2.Items.Item(idx)) Then
-                        If File.Exists(Link.Text + "\" + List2.Items.Item(idx).Replace(fmt, "") + "_2" + fmt) Then
-                            List2.Items.Item(idx) = List.Items.Item(idx)
-                        Else
-                            List2.Items.Item(idx) = List2.Items.Item(idx).Replace(fmt, "") + "_2" + fmt
-                            RenameFile()
-                        End If
+                        For i = 0 To 9
+                            If Not File.Exists($"{Link.Text}\{List2.Items.Item(idx).Replace(fmt, "")}_{i}{fmt}") Then
+                                List2.Items.Item(idx) = $"{List2.Items.Item(idx).Replace(fmt, "")}_{i}{fmt}"
+                                RenameFile()
+                                Exit For
+                            End If
+                            If i = 9 Then
+                                List2.Items.Item(idx) = List.Items.Item(idx)
+                            End If
+                        Next
                     Else
                         RenameFile()
                     End If
                 End If
-                fname += List.Items.Item(idx) + "
-" + List2.Items.Item(idx) + "
-"
+                fname += List.Items.Item(idx) + "|" + List2.Items.Item(idx) + "*"
             Next
             If List.Items.Count > 1 Then
                 File.WriteAllText(Link.Text + "\Name replacement process.txt", fname)
@@ -198,6 +191,8 @@ The 'Return Old Names' File already exists, if you want to restore them, use the
                 If File.Exists(Link.Text + "\" + List.Items.Item(idx)) Then
                     If Not File.Exists(Link.Text + "\" + List2.Items.Item(idx)) Then
                         RenameFile()
+                    Else
+                        '
                     End If
                 End If
             Next
@@ -207,7 +202,9 @@ The 'Return Old Names' File already exists, if you want to restore them, use the
 
     Private Sub RenameFile()
         Try
-            File.Move(Link.Text + "\" + List.Items.Item(idx), Link.Text + "\" + List2.Items.Item(idx))
+            If List2.Items.Item(idx) <> List.Items.Item(idx) Then
+                File.Move(Link.Text + "\" + List.Items.Item(idx), Link.Text + "\" + List2.Items.Item(idx))
+            End If
         Catch ex As IOException
             MessageBox.Show($"فشل في تسمية الملف من {List.Items.Item(idx)}
 إلى {List2.Items.Item(idx)}
@@ -220,23 +217,23 @@ To {List2.Items.Item(idx)}", "😢😢😢")
     Private Sub RegretBtn_Click(sender As Object, e As EventArgs) Handles regretBtn.Click
         On Error Resume Next
         If Folder.ShowDialog = DialogResult.OK Then
-            Dim num As Integer = -1
             Link.Text = Folder.SelectedPath
             List.Items.Clear() : List2.Items.Clear()
             checkFilesNameBtn.Enabled = False : executeBtn.Enabled = False
             If File.Exists(Link.Text + "\Name replacement process.txt") Then
-                RTB.Text = File.ReadAllText(Link.Text + "\Name replacement process.txt")
-                num = RTB.Lines(0)
-                If num > 0 Then
-                    For idx = 1 To num + 1
-                        List.Items.Add(RTB.Lines(2 * idx))
-                        List2.Items.Add(RTB.Lines(2 * idx - 1))
-                    Next
-                    executeBtn.Enabled = True : execOrUndo = 1
-                Else
-                    MsgBox("هناك شيء غير صحيح
-There is something not right", vbCritical, ":(")
-                End If
+                Dim arr As String() = File.ReadAllText(Link.Text + "\Name replacement process.txt").Split("*")
+                Dim arr2 As String()
+                For idx = 0 To arr.Length - 1
+                    arr2 = arr(idx).Split("|")
+                    If arr2.Length = 2 Then
+                        List.Items.Add(arr2(1))
+                        List2.Items.Add(arr2(0))
+                    Else
+                        '                        MsgBox("هناك شيء غير صحيح
+                        'There is something not right", vbCritical, ":(")
+                    End If
+                Next
+                executeBtn.Enabled = True : execOrUndo = 1
             Else
                 MsgBox("لم تفعل شيئاً تندم عليه أو ربما عليك أن تندم أيضاً على قيامك بحذف ملف الندم هههههههه
 You haven't done anything you regret, or maybe you should regret deleting the regret file hahahaha", vbInformation, "😢😢😢")
