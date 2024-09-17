@@ -201,7 +201,7 @@ Partial Class Form1
         'Link
         '
         Me.Link.AutoSize = True
-        Me.Link.Location = New System.Drawing.Point(12, 313)
+        Me.Link.Location = New System.Drawing.Point(0, 0)
         Me.Link.Name = "Link"
         Me.Link.Size = New System.Drawing.Size(25, 13)
         Me.Link.TabIndex = 38

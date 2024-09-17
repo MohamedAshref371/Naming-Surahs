@@ -42,7 +42,7 @@ Public Class Form1
             End If
             If Folder.ShowDialog = DialogResult.OK Then
                 Link.Text = Folder.SelectedPath
-                warningItemsList.Clear() : notExistItemsList.Clear() : errorItemsList.Clear()
+                unknownItemsList.Clear() : namingFailedItemsList.Clear() : notExistItemsList.Clear() : errorItemsList.Clear()
                 List.Items.Clear() : List2.Items.Clear()
                 executeBtn.Enabled = False
 
@@ -91,6 +91,7 @@ The 'Return Old Names' File already exists, if you want to restore them, use the
             frt += fmt
         Else
             frt = List.Items.Item(idx)
+            unknownItemsList.Add(idx)
         End If
     End Sub
 
@@ -156,6 +157,7 @@ The 'Return Old Names' File already exists, if you want to restore them, use the
             List2.Items.Add(frt)
         Next
         executeBtn.Enabled = True
+        List.Invalidate()
     End Sub
 
     Private Sub ExecuteBtn_Click(sender As Object, e As EventArgs) Handles executeBtn.Click
@@ -179,14 +181,13 @@ The 'Return Old Names' File already exists, if you want to restore them, use the
         List.Invalidate() : List2.Invalidate()
     End Sub
 
-    Shared warningItemsList As New List(Of Integer)
+    Shared unknownItemsList As New List(Of Integer)
+    Shared namingFailedItemsList As New List(Of Integer)
     Shared notExistItemsList As New List(Of Integer)
     Shared errorItemsList As New List(Of Integer)
     Private Sub RenameFile()
         Try
-            If List2.Items.Item(idx) = List.Items.Item(idx) Then
-                warningItemsList.Add(idx)
-            Else
+            If List2.Items.Item(idx) <> List.Items.Item(idx) Then
                 If File.Exists(Link.Text + "\" + List.Items.Item(idx)) Then
                     If File.Exists(Link.Text + "\" + List2.Items.Item(idx)) Then
                         List2.Items.Item(idx) = List.Items.Item(idx)
@@ -198,7 +199,7 @@ The 'Return Old Names' File already exists, if you want to restore them, use the
                         Next
                     End If
                     If List2.Items.Item(idx) = List.Items.Item(idx) Then
-                        warningItemsList.Add(idx)
+                        namingFailedItemsList.Add(idx)
                     Else
                         File.Move(Link.Text + "\" + List.Items.Item(idx), Link.Text + "\" + List2.Items.Item(idx))
                     End If
@@ -208,11 +209,6 @@ The 'Return Old Names' File already exists, if you want to restore them, use the
             End If
         Catch ex As IOException
             errorItemsList.Add(idx)
-            MessageBox.Show($"فشل في تسمية الملف من {List.Items.Item(idx)}
-إلى {List2.Items.Item(idx)}
-
-Failed to name file from {List.Items.Item(idx)}
-To {List2.Items.Item(idx)}", "😢😢😢")
         End Try
     End Sub
 
@@ -220,7 +216,9 @@ To {List2.Items.Item(idx)}", "😢😢😢")
         If e.Index < 0 Then Return
 
         Dim backgroundColor As Color
-        If warningItemsList.Contains(e.Index) Then
+        If unknownItemsList.Contains(e.Index) Then
+            backgroundColor = Color.LightGray
+        ElseIf namingFailedItemsList.Contains(e.Index) Then
             backgroundColor = Color.Yellow
         ElseIf notExistItemsList.Contains(e.Index) Then
             backgroundColor = Color.Orange
@@ -241,7 +239,7 @@ To {List2.Items.Item(idx)}", "😢😢😢")
         On Error Resume Next
         If Folder.ShowDialog = DialogResult.OK Then
             Link.Text = Folder.SelectedPath
-            warningItemsList.Clear() : notExistItemsList.Clear() : errorItemsList.Clear()
+            unknownItemsList.Clear() : namingFailedItemsList.Clear() : notExistItemsList.Clear() : errorItemsList.Clear()
             List.Items.Clear() : List2.Items.Clear()
             checkFilesNameBtn.Enabled = False : executeBtn.Enabled = False
             If File.Exists(Link.Text + "\Name replacement process.txt") Then
