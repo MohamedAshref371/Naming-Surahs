@@ -160,6 +160,7 @@ The 'Return Old Names' File already exists, if you want to restore them, use the
     Private Sub ExecuteBtn_Click(sender As Object, e As EventArgs) Handles executeBtn.Click
         executeBtn.Enabled = False
         If execOrUndo = 0 Then
+            fname = ""
             For idx = 0 To List.Items.Count - 1
                 fmt = Path.GetExtension(List.Items.Item(idx))
                 If fmt = "" Then fmt = "*"
