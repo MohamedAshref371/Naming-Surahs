@@ -219,14 +219,14 @@ The 'Return Old Names' File already exists, if you want to restore them, use the
         If e.Index < 0 Then Return
 
         Dim backgroundColor As Color
-        If unknownItemsList.Contains(e.Index) Then
-            backgroundColor = Color.LightGray
-        ElseIf namingFailedItemsList.Contains(e.Index) Then
+        If namingFailedItemsList.Contains(e.Index) Then
             backgroundColor = Color.Yellow
         ElseIf notExistItemsList.Contains(e.Index) Then
             backgroundColor = Color.Orange
         ElseIf errorItemsList.Contains(e.Index) Then
             backgroundColor = Color.Red
+        ElseIf unknownItemsList.Contains(e.Index) Then
+            backgroundColor = Color.LightGray
         Else
             backgroundColor = e.BackColor
         End If
@@ -281,6 +281,11 @@ number"
             TurnOn1.RightToLeft = RightToLeft.No : TurnOn2.RightToLeft = RightToLeft.No : TurnOn3.RightToLeft = RightToLeft.No
             allFilesCheckBox.Text = "All files" : audioFilesCheckBox.Text = "Audio" : videoFilesCheckBox.Text = "Video"
             regretBtn.Text = "I regret what I did"
+            color1desc.Text = "The Surah name could not be identified from the file name"
+            color2desc.Text = "Could not find a suitable Surah name in the folder"
+            color3desc.Text = "The file was not found during the renaming process"
+            color4desc.Text = "An error occurred during the renaming process"
+
         Else
             languageBtn.Text = "English"
             Kill(hm + "lang")
@@ -294,6 +299,10 @@ number"
             TurnOn1.RightToLeft = RightToLeft.Yes : TurnOn2.RightToLeft = RightToLeft.Yes : TurnOn3.RightToLeft = RightToLeft.Yes
             allFilesCheckBox.Text = "كل الملفات" : audioFilesCheckBox.Text = "صوت" : videoFilesCheckBox.Text = "فيديو"
             regretBtn.Text = "أنا نادم على ما فعلت"
+            color1desc.Text = "لم يتم التعرف على السورة من إسم الملف"
+            color2desc.Text = "لم يتم التمكن من إيجاد إسم مناسب للسورة داخل المجلد"
+            color3desc.Text = "لم يتم إيجاد الملف أثناء عملية التسمية"
+            color4desc.Text = "حدث خطأ أثناء عملية التسمية"
         End If
     End Sub
 
@@ -416,16 +425,14 @@ number"
     Private Sub EditingTextBox_Leave(sender As Object, e As EventArgs)
         If List2.SelectedIndex <> -1 And editingTextBox.Text.Trim <> "" Then
             List2.Items(List2.SelectedIndex) = editingTextBox.Text
+            unknownItemsList.Remove(List2.SelectedIndex)
         End If
         editingTextBox.Visible = False
     End Sub
 
     Private Sub EditingTextBox_KeyDown(sender As Object, e As KeyEventArgs)
         If e.KeyCode = Keys.Enter Then
-            If List2.SelectedIndex <> -1 And editingTextBox.Text.Trim <> "" Then
-                List2.Items(List2.SelectedIndex) = editingTextBox.Text
-            End If
-            editingTextBox.Visible = False
+            EditingTextBox_Leave(Nothing, Nothing)
         End If
     End Sub
 
