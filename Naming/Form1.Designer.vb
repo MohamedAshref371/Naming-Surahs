@@ -473,9 +473,9 @@ Partial Class Form1
         Me.color2desc.AutoSize = True
         Me.color2desc.Location = New System.Drawing.Point(36, 293)
         Me.color2desc.Name = "color2desc"
-        Me.color2desc.Size = New System.Drawing.Size(268, 13)
+        Me.color2desc.Size = New System.Drawing.Size(263, 13)
         Me.color2desc.TabIndex = 62
-        Me.color2desc.Text = "لم يتم التمكن من إيجاد إسم مناسب للسورة داخل المجلد"
+        Me.color2desc.Text = "لم يتم التمكن من إيجاد إسم مناسب للملف داخل المجلد"
         '
         'Label16
         '
