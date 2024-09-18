@@ -167,10 +167,11 @@ The 'Return Old Names' File already exists, if you want to restore them, use the
             For idx = 0 To List.Items.Count - 1
                 fmt = Path.GetExtension(List.Items.Item(idx))
                 If fmt = "" Then fmt = "*"
-                RenameFile()
-                fname += List.Items.Item(idx) + "|" + List2.Items.Item(idx) + "*"
+                If RenameFile() Then
+                    fname += List.Items.Item(idx) + "|" + List2.Items.Item(idx) + "*"
+                End If
             Next
-            If List.Items.Count > 0 Then File.WriteAllText(Link.Text + "\Name replacement process.txt", fname)
+            If fname <> "" Then File.WriteAllText(Link.Text + "\Name replacement process.txt", fname)
             checkFilesNameBtn.Enabled = False
         Else
             For idx = 0 To List.Items.Count - 1
@@ -185,7 +186,7 @@ The 'Return Old Names' File already exists, if you want to restore them, use the
     Shared namingFailedItemsList As New List(Of Integer)
     Shared notExistItemsList As New List(Of Integer)
     Shared errorItemsList As New List(Of Integer)
-    Private Sub RenameFile()
+    Private Function RenameFile() As Boolean
         Try
             If List2.Items.Item(idx) <> List.Items.Item(idx) Then
                 If File.Exists(Link.Text + "\" + List.Items.Item(idx)) Then
@@ -202,15 +203,17 @@ The 'Return Old Names' File already exists, if you want to restore them, use the
                         namingFailedItemsList.Add(idx)
                     Else
                         File.Move(Link.Text + "\" + List.Items.Item(idx), Link.Text + "\" + List2.Items.Item(idx))
+                        Return True
                     End If
                 Else
                     notExistItemsList.Add(idx)
                 End If
             End If
-        Catch ex As IOException
+        Catch ex As Exception
             errorItemsList.Add(idx)
         End Try
-    End Sub
+        Return False
+    End Function
 
     Private Sub ListBox_DrawItem(sender As Object, e As DrawItemEventArgs) Handles List.DrawItem, List2.DrawItem
         If e.Index < 0 Then Return

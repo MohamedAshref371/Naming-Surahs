@@ -308,6 +308,7 @@ Partial Class Form1
         '
         Me.concat1.Font = New System.Drawing.Font("Tahoma", 12.0!)
         Me.concat1.Location = New System.Drawing.Point(103, 118)
+        Me.concat1.MaxLength = 9
         Me.concat1.Name = "concat1"
         Me.concat1.Size = New System.Drawing.Size(48, 27)
         Me.concat1.TabIndex = 46
@@ -317,6 +318,7 @@ Partial Class Form1
         '
         Me.concat2.Font = New System.Drawing.Font("Tahoma", 12.0!)
         Me.concat2.Location = New System.Drawing.Point(317, 118)
+        Me.concat2.MaxLength = 9
         Me.concat2.Name = "concat2"
         Me.concat2.Size = New System.Drawing.Size(48, 27)
         Me.concat2.TabIndex = 47
@@ -368,6 +370,7 @@ Partial Class Form1
         Me.concat3.Enabled = False
         Me.concat3.Font = New System.Drawing.Font("Tahoma", 12.0!)
         Me.concat3.Location = New System.Drawing.Point(180, 205)
+        Me.concat3.MaxLength = 9
         Me.concat3.Name = "concat3"
         Me.concat3.Size = New System.Drawing.Size(48, 27)
         Me.concat3.TabIndex = 52
@@ -432,6 +435,7 @@ Partial Class Form1
         Me.concat4.Enabled = False
         Me.concat4.Font = New System.Drawing.Font("Tahoma", 12.0!)
         Me.concat4.Location = New System.Drawing.Point(318, 246)
+        Me.concat4.MaxLength = 9
         Me.concat4.Name = "concat4"
         Me.concat4.Size = New System.Drawing.Size(48, 27)
         Me.concat4.TabIndex = 57
