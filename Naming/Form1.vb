@@ -96,34 +96,37 @@ The 'Return Old Names' File already exists, if you want to restore them, use the
     End Sub
 
     Private Function CheckANumberInFileName(s As String, n As Integer) As Integer
-        If s.Length < n Then Return -1
+        If s.Length < n Then Return 0
 
-        Dim num As Integer
-        For i = 0 To s.Length - n
-            If Integer.TryParse(s.Substring(i, n), num) And num >= 0 Then Return num
+        Dim text As String = ""
+        For i = 0 To s.Length - 1
+            If Char.IsDigit(s(i)) Then
+                text += s(i)
+            ElseIf text.Length >= 1 AndAlso Char.IsDigit(text(text.Length - 1)) Then
+                text += ","
+            End If
         Next
 
-        Return -1
+        Dim arr As String() = text.Split(",")
+        For i = 0 To arr.Length - 1
+            If arr.Length = n AndAlso arr(i) >= 1 AndAlso arr(i) <= 114 Then Return arr(i)
+        Next
+
+        Return 0
     End Function
 
     Private Sub CheckSurahNumber()
         fname = List.Items.Item(idx).ToLower.replace("َ", "").replace("ِ", "").replace("ُ", "").replace("ً", "").replace("ٍ", "").replace("ٌ", "").replace("ْ", "").replace("ّ", "").replace("'", "").replace("-", "").Replace(fmt, "")
         Dim num As Integer = CheckANumberInFileName(fname, 3)
-        If num > 0 Then
-            If num >= 1 AndAlso num <= 114 Then
-                Surah(num)
-                Exit Sub
-            Else
-                num = -5
-            End If
+        If num >= 1 Then
+            Surah(num)
+            Exit Sub
         End If
 
-        If num > -3 Then
-            num = CheckANumberInFileName(fname, 2)
-            If num > 0 Then
-                Surah(num)
-                Exit Sub
-            End If
+        num = CheckANumberInFileName(fname, 2)
+        If num >= 1 Then
+            Surah(num)
+            Exit Sub
         End If
 
         Dim temp As String() = My.Resources.codes.Split("*")
@@ -140,11 +143,7 @@ The 'Return Old Names' File already exists, if you want to restore them, use the
             End If
         Next
 
-        If num > -3 Then
-            Surah(CheckANumberInFileName(fname, 1))
-        Else
-            Surah(0)
-        End If
+        Surah(CheckANumberInFileName(fname, 1))
     End Sub
 
     Private Sub CheckFilesNameBtn_Click(sender As Object, e As EventArgs) Handles checkFilesNameBtn.Click
