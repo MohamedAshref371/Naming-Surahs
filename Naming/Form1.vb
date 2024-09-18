@@ -102,7 +102,7 @@ The 'Return Old Names' File already exists, if you want to restore them, use the
         For i = 0 To s.Length - 1
             If Char.IsDigit(s(i)) Then
                 text += s(i)
-            ElseIf text.Length >= 1 AndAlso Char.IsDigit(text(text.Length - 1)) Then
+            ElseIf text.Length > 0 AndAlso text(text.Length - 1) <> "," Then
                 text += ","
             End If
         Next
