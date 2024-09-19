@@ -43,7 +43,7 @@ Public Class Form1
             If Folder.ShowDialog = DialogResult.OK Then
                 Link.Text = Folder.SelectedPath
                 unknownItemsList.Clear() : namingFailedItemsList.Clear() : notExistItemsList.Clear() : errorItemsList.Clear()
-                List.Items.Clear() : List2.Items.Clear()
+                ListBox1.Items.Clear() : ListBox2.Items.Clear()
                 executeBtn.Enabled = False
 
                 If File.Exists(Link.Text + "\Name replacement process.txt") AndAlso
@@ -59,19 +59,19 @@ The 'Return Old Names' File already exists, if you want to restore them, use the
                     If allFilesCheckBox.Checked OrElse
                         audioFilesCheckBox.Checked AndAlso ".mp3.wma.m4a.flac.aac.ape.wav.wv.dts.ac3.mmf.amr.m4r.oog.mp2.dat".Contains(fmt) OrElse
                         videoFilesCheckBox.Checked AndAlso ".mp4.kmv.avi.flv.mov.wmv.3gp.3g2.mpg.vob.ogg.webm".Contains(fmt) Then
-                        List.Items.Add(fname)
+                        ListBox1.Items.Add(fname)
                     End If
                 Next
                 execOrUndo = 0
-                If List.Items.Count > 0 Then
+                If ListBox1.Items.Count > 0 Then
                     checkFilesNameBtn.Enabled = True
                 Else
                     If allFilesCheckBox.Checked Then
-                        List.Items.Add("المجلد فارغ")
-                        List.Items.Add("The folder is empty")
+                        ListBox1.Items.Add("المجلد فارغ")
+                        ListBox1.Items.Add("The folder is empty")
                     Else
-                        List.Items.Add("الصيغ المطلوبة غير موجودة")
-                        List.Items.Add("Required formats do not exist")
+                        ListBox1.Items.Add("الصيغ المطلوبة غير موجودة")
+                        ListBox1.Items.Add("Required formats do not exist")
                     End If
                 End If
             End If
@@ -90,7 +90,7 @@ The 'Return Old Names' File already exists, if you want to restore them, use the
 
             frt += fmt
         Else
-            frt = List.Items.Item(idx)
+            frt = ListBox1.Items.Item(idx)
             unknownItemsList.Add(idx)
         End If
     End Sub
@@ -116,7 +116,7 @@ The 'Return Old Names' File already exists, if you want to restore them, use the
     End Function
 
     Private Sub CheckSurahNumber()
-        fname = List.Items.Item(idx).ToLower.replace("َ", "").replace("ِ", "").replace("ُ", "").replace("ً", "").replace("ٍ", "").replace("ٌ", "").replace("ْ", "").replace("ّ", "").replace("'", "").replace("-", "").Replace(fmt, "")
+        fname = ListBox1.Items.Item(idx).ToLower.replace("َ", "").replace("ِ", "").replace("ُ", "").replace("ً", "").replace("ٍ", "").replace("ٌ", "").replace("ْ", "").replace("ّ", "").replace("'", "").replace("-", "").Replace(fmt, "")
         Dim num As Integer = CheckANumberInFileName(fname, 3)
         If num >= 1 Then
             Surah(num)
@@ -147,38 +147,38 @@ The 'Return Old Names' File already exists, if you want to restore them, use the
     End Sub
 
     Private Sub CheckFilesNameBtn_Click(sender As Object, e As EventArgs) Handles checkFilesNameBtn.Click
-        List.SelectedIndex = -1
-        List2.Items.Clear()
-        For idx = 0 To List.Items.Count - 1
-            fmt = Path.GetExtension(List.Items.Item(idx))
+        ListBox1.SelectedIndex = -1
+        ListBox2.Items.Clear()
+        For idx = 0 To ListBox1.Items.Count - 1
+            fmt = Path.GetExtension(ListBox1.Items.Item(idx))
             If fmt = "" Then fmt = "*"
             CheckSurahNumber()
-            List2.Items.Add(frt)
+            ListBox2.Items.Add(frt)
         Next
         executeBtn.Enabled = True
-        List.Invalidate()
+        ListBox1.Invalidate()
     End Sub
 
     Private Sub ExecuteBtn_Click(sender As Object, e As EventArgs) Handles executeBtn.Click
         executeBtn.Enabled = False
         If execOrUndo = 0 Then
             fname = ""
-            For idx = 0 To List.Items.Count - 1
-                fmt = Path.GetExtension(List.Items.Item(idx))
+            For idx = 0 To ListBox1.Items.Count - 1
+                fmt = Path.GetExtension(ListBox1.Items.Item(idx))
                 If fmt = "" Then fmt = "*"
                 If RenameFile() Then
-                    fname += List.Items.Item(idx) + "|" + List2.Items.Item(idx) + "*"
+                    fname += ListBox1.Items.Item(idx) + "|" + ListBox2.Items.Item(idx) + "*"
                 End If
             Next
             If fname <> "" Then File.WriteAllText(Link.Text + "\Name replacement process.txt", fname)
             checkFilesNameBtn.Enabled = False
         Else
-            For idx = 0 To List.Items.Count - 1
+            For idx = 0 To ListBox1.Items.Count - 1
                 RenameFile()
             Next
             File.Delete(Link.Text + "\Name replacement process.txt")
         End If
-        List.Invalidate() : List2.Invalidate()
+        ListBox1.Invalidate() : ListBox2.Invalidate()
     End Sub
 
     Shared unknownItemsList As New List(Of Integer)
@@ -187,21 +187,20 @@ The 'Return Old Names' File already exists, if you want to restore them, use the
     Shared errorItemsList As New List(Of Integer)
     Private Function RenameFile() As Boolean
         Try
-            If List2.Items.Item(idx) <> List.Items.Item(idx) Then
-                If File.Exists(Link.Text + "\" + List.Items.Item(idx)) Then
-                    If File.Exists(Link.Text + "\" + List2.Items.Item(idx)) Then
-                        List2.Items.Item(idx) = List.Items.Item(idx)
+            If ListBox2.Items.Item(idx) <> ListBox1.Items.Item(idx) Then
+                If File.Exists(Link.Text + "\" + ListBox1.Items.Item(idx)) Then
+                    If File.Exists(Link.Text + "\" + ListBox2.Items.Item(idx)) Then
                         For i = 0 To 9
-                            If Not File.Exists($"{Link.Text}\{List2.Items.Item(idx).Replace(fmt, "")}_{i}{fmt}") Then
-                                List2.Items.Item(idx) = $"{List2.Items.Item(idx).Replace(fmt, "")}_{i}{fmt}"
+                            If Not File.Exists($"{Link.Text}\{ListBox2.Items.Item(idx).Replace(fmt, "")}_{i}{fmt}") Then
+                                ListBox2.Items.Item(idx) = $"{ListBox2.Items.Item(idx).Replace(fmt, "")}_{i}{fmt}"
                                 Exit For
                             End If
                         Next
                     End If
-                    If List2.Items.Item(idx) = List.Items.Item(idx) Then
+                    If File.Exists(Link.Text + "\" + ListBox2.Items.Item(idx)) Then
                         namingFailedItemsList.Add(idx)
                     Else
-                        File.Move(Link.Text + "\" + List.Items.Item(idx), Link.Text + "\" + List2.Items.Item(idx))
+                        File.Move(Link.Text + "\" + ListBox1.Items.Item(idx), Link.Text + "\" + ListBox2.Items.Item(idx))
                         Return True
                     End If
                 Else
@@ -214,7 +213,7 @@ The 'Return Old Names' File already exists, if you want to restore them, use the
         Return False
     End Function
 
-    Private Sub ListBox_DrawItem(sender As Object, e As DrawItemEventArgs) Handles List.DrawItem, List2.DrawItem
+    Private Sub ListBox_DrawItem(sender As Object, e As DrawItemEventArgs) Handles ListBox1.DrawItem, ListBox2.DrawItem
         If e.Index < 0 Then Return
 
         Dim backgroundColor As Color
@@ -242,7 +241,7 @@ The 'Return Old Names' File already exists, if you want to restore them, use the
         If Folder.ShowDialog = DialogResult.OK Then
             Link.Text = Folder.SelectedPath
             unknownItemsList.Clear() : namingFailedItemsList.Clear() : notExistItemsList.Clear() : errorItemsList.Clear()
-            List.Items.Clear() : List2.Items.Clear()
+            ListBox1.Items.Clear() : ListBox2.Items.Clear()
             checkFilesNameBtn.Enabled = False : executeBtn.Enabled = False
             If File.Exists(Link.Text + "\Name replacement process.txt") Then
                 Dim arr As String() = File.ReadAllText(Link.Text + "\Name replacement process.txt").Split("*")
@@ -250,8 +249,8 @@ The 'Return Old Names' File already exists, if you want to restore them, use the
                 For idx = 0 To arr.Length - 1
                     arr2 = arr(idx).Split("|")
                     If arr2.Length = 2 Then
-                        List.Items.Add(arr2(1))
-                        List2.Items.Add(arr2(0))
+                        ListBox1.Items.Add(arr2(1))
+                        ListBox2.Items.Add(arr2(0))
                     End If
                 Next
                 executeBtn.Enabled = True : execOrUndo = 1
@@ -369,43 +368,43 @@ number"
         Langs(Lang3, Lang1, Lang2)
     End Sub
 
-    Private Sub List_SelectedIndexChanged(sender As Object, e As EventArgs) Handles List.SelectedIndexChanged
-        If List2.Items.Count = List.Items.Count Then
-            List2.SelectedIndex = List.SelectedIndex
+    Private Sub List_SelectedIndexChanged(sender As Object, e As EventArgs) Handles ListBox1.SelectedIndexChanged
+        If ListBox2.Items.Count = ListBox1.Items.Count Then
+            ListBox2.SelectedIndex = ListBox1.SelectedIndex
         End If
     End Sub
 
-    Private Sub List2_SelectedIndexChanged(sender As Object, e As EventArgs) Handles List2.SelectedIndexChanged
-        List.SelectedIndex = List2.SelectedIndex
+    Private Sub List2_SelectedIndexChanged(sender As Object, e As EventArgs) Handles ListBox2.SelectedIndexChanged
+        ListBox1.SelectedIndex = ListBox2.SelectedIndex
     End Sub
 
-    Private Sub List_KeyDown(sender As Object, e As KeyEventArgs) Handles List.KeyDown
-        If e.KeyCode = Keys.Delete AndAlso List.SelectedIndex >= 0 Then
-            Dim index As Integer = List.SelectedIndex
-            If List2.Items.Count = List.Items.Count Then
-                List2.Items.RemoveAt(index)
-                List2.SelectedIndex = -1
+    Private Sub ListBox1_KeyDown(sender As Object, e As KeyEventArgs) Handles ListBox1.KeyDown
+        If e.KeyCode = Keys.Delete AndAlso ListBox1.SelectedIndex >= 0 Then
+            Dim index As Integer = ListBox1.SelectedIndex
+            If ListBox2.Items.Count = ListBox1.Items.Count Then
+                ListBox2.Items.RemoveAt(index)
+                ListBox2.SelectedIndex = -1
             End If
-            List.Items.RemoveAt(index)
-            List.SelectedIndex = -1
+            ListBox1.Items.RemoveAt(index)
+            ListBox1.SelectedIndex = -1
         End If
     End Sub
 
-    Private Sub List2_KeyDown(sender As Object, e As KeyEventArgs) Handles List2.KeyDown
-        If e.KeyCode = Keys.Delete AndAlso List2.SelectedIndex >= 0 Then
-            Dim index As Integer = List2.SelectedIndex
-            List.Items.RemoveAt(index)
-            List2.Items.RemoveAt(index)
-            List.SelectedIndex = -1
-            List2.SelectedIndex = -1
+    Private Sub ListBox2_KeyDown(sender As Object, e As KeyEventArgs) Handles ListBox2.KeyDown
+        If e.KeyCode = Keys.Delete AndAlso ListBox2.SelectedIndex >= 0 Then
+            Dim index As Integer = ListBox2.SelectedIndex
+            ListBox1.Items.RemoveAt(index)
+            ListBox2.Items.RemoveAt(index)
+            ListBox1.SelectedIndex = -1
+            ListBox2.SelectedIndex = -1
         End If
     End Sub
 
-    Private Sub List2_DoubleClick(sender As Object, e As EventArgs) Handles List2.DoubleClick
-        If executeBtn.Enabled And List2.SelectedIndex <> -1 Then
-            editingTextBox.Text = List2.SelectedItem.ToString()
+    Private Sub ListBox2_DoubleClick(sender As Object, e As EventArgs) Handles ListBox2.DoubleClick
+        If executeBtn.Enabled And ListBox2.SelectedIndex <> -1 Then
+            editingTextBox.Text = ListBox2.SelectedItem.ToString()
 
-            editingTextBox.SetBounds(List2.Left, List2.GetItemRectangle(List2.SelectedIndex).Top + List2.Top, List2.Width, List2.ItemHeight)
+            editingTextBox.SetBounds(ListBox2.Left, ListBox2.GetItemRectangle(ListBox2.SelectedIndex).Top + ListBox2.Top, ListBox2.Width, ListBox2.ItemHeight)
 
             editingTextBox.Visible = True
             editingTextBox.BringToFront()
@@ -413,18 +412,18 @@ number"
         End If
     End Sub
 
-    Private Sub List_TopIndexChanged(sender As Object, e As EventArgs) Handles List.MouseCaptureChanged, List.MouseWheel
-        List2.TopIndex = List.TopIndex
+    Private Sub ListBox1_TopIndexChanged(sender As Object, e As EventArgs) Handles ListBox1.MouseCaptureChanged, ListBox1.MouseWheel
+        ListBox2.TopIndex = ListBox1.TopIndex
     End Sub
 
-    Private Sub List2_TopIndexChanged(sender As Object, e As EventArgs) Handles List2.MouseCaptureChanged, List2.MouseWheel
-        List.TopIndex = List2.TopIndex
+    Private Sub ListBox2_TopIndexChanged(sender As Object, e As EventArgs) Handles ListBox2.MouseCaptureChanged, ListBox2.MouseWheel
+        ListBox1.TopIndex = ListBox2.TopIndex
     End Sub
 
     Private Sub EditingTextBox_Leave(sender As Object, e As EventArgs)
-        If List2.SelectedIndex <> -1 And editingTextBox.Text.Trim <> "" Then
-            List2.Items(List2.SelectedIndex) = editingTextBox.Text
-            unknownItemsList.Remove(List2.SelectedIndex)
+        If ListBox2.SelectedIndex <> -1 And editingTextBox.Text.Trim <> "" Then
+            ListBox2.Items(ListBox2.SelectedIndex) = editingTextBox.Text
+            unknownItemsList.Remove(ListBox2.SelectedIndex)
         End If
         editingTextBox.Visible = False
     End Sub

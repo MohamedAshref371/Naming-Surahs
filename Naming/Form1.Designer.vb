@@ -36,10 +36,10 @@ Partial Class Form1
         Me.Label1 = New System.Windows.Forms.Label()
         Me.openFolderBtn = New System.Windows.Forms.Button()
         Me.checkFilesNameBtn = New System.Windows.Forms.Button()
-        Me.List = New System.Windows.Forms.ListBox()
+        Me.ListBox1 = New System.Windows.Forms.ListBox()
         Me.Folder = New System.Windows.Forms.FolderBrowserDialog()
         Me.Link = New System.Windows.Forms.Label()
-        Me.List2 = New System.Windows.Forms.ListBox()
+        Me.ListBox2 = New System.Windows.Forms.ListBox()
         Me.executeBtn = New System.Windows.Forms.Button()
         Me.L8 = New System.Windows.Forms.Label()
         Me.regretBtn = New System.Windows.Forms.Button()
@@ -197,14 +197,14 @@ Partial Class Form1
         Me.checkFilesNameBtn.Text = "فحص"
         Me.checkFilesNameBtn.UseVisualStyleBackColor = True
         '
-        'List
+        'ListBox1
         '
-        Me.List.DrawMode = System.Windows.Forms.DrawMode.OwnerDrawFixed
-        Me.List.FormattingEnabled = True
-        Me.List.Location = New System.Drawing.Point(381, 5)
-        Me.List.Name = "List"
-        Me.List.Size = New System.Drawing.Size(205, 563)
-        Me.List.TabIndex = 36
+        Me.ListBox1.DrawMode = System.Windows.Forms.DrawMode.OwnerDrawFixed
+        Me.ListBox1.FormattingEnabled = True
+        Me.ListBox1.Location = New System.Drawing.Point(381, 5)
+        Me.ListBox1.Name = "ListBox1"
+        Me.ListBox1.Size = New System.Drawing.Size(205, 563)
+        Me.ListBox1.TabIndex = 36
         '
         'Link
         '
@@ -216,14 +216,14 @@ Partial Class Form1
         Me.Link.Text = "Link"
         Me.Link.Visible = False
         '
-        'List2
+        'ListBox2
         '
-        Me.List2.DrawMode = System.Windows.Forms.DrawMode.OwnerDrawFixed
-        Me.List2.FormattingEnabled = True
-        Me.List2.Location = New System.Drawing.Point(592, 5)
-        Me.List2.Name = "List2"
-        Me.List2.Size = New System.Drawing.Size(205, 563)
-        Me.List2.TabIndex = 39
+        Me.ListBox2.DrawMode = System.Windows.Forms.DrawMode.OwnerDrawFixed
+        Me.ListBox2.FormattingEnabled = True
+        Me.ListBox2.Location = New System.Drawing.Point(592, 5)
+        Me.ListBox2.Name = "ListBox2"
+        Me.ListBox2.Size = New System.Drawing.Size(205, 563)
+        Me.ListBox2.TabIndex = 39
         '
         'executeBtn
         '
@@ -551,9 +551,9 @@ Partial Class Form1
         Me.Controls.Add(Me.aboutBtn)
         Me.Controls.Add(Me.regretBtn)
         Me.Controls.Add(Me.executeBtn)
-        Me.Controls.Add(Me.List2)
+        Me.Controls.Add(Me.ListBox2)
         Me.Controls.Add(Me.Link)
-        Me.Controls.Add(Me.List)
+        Me.Controls.Add(Me.ListBox1)
         Me.Controls.Add(Me.TurnOn2)
         Me.Controls.Add(Me.Lang1)
         Me.Controls.Add(Me.TurnOn1)
@@ -600,10 +600,10 @@ Partial Class Form1
     Friend WithEvents Label1 As Label
     Friend WithEvents openFolderBtn As Button
     Friend WithEvents checkFilesNameBtn As Button
-    Friend WithEvents List As ListBox
+    Friend WithEvents ListBox1 As ListBox
     Friend WithEvents Folder As FolderBrowserDialog
     Friend WithEvents Link As Label
-    Friend WithEvents List2 As ListBox
+    Friend WithEvents ListBox2 As ListBox
     Friend WithEvents executeBtn As Button
     Friend WithEvents L8 As Label
     Friend WithEvents regretBtn As Button
