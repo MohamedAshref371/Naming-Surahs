@@ -109,7 +109,7 @@ The 'Return Old Names' File already exists, if you want to restore them, use the
 
         Dim arr As String() = text.Split(",")
         For i = 0 To arr.Length - 1
-            If arr.Length = n AndAlso arr(i) >= 1 AndAlso arr(i) <= 114 Then Return arr(i)
+            If arr(i).Length = n AndAlso arr(i) >= 1 AndAlso arr(i) <= 114 Then Return arr(i)
         Next
 
         Return 0
@@ -387,6 +387,10 @@ number"
             End If
             ListBox1.Items.RemoveAt(index)
             ListBox1.SelectedIndex = -1
+            AfterDeleteRow(unknownItemsList, index)
+            AfterDeleteRow(namingFailedItemsList, index)
+            AfterDeleteRow(notExistItemsList, index)
+            AfterDeleteRow(errorItemsList, index)
         End If
     End Sub
 
@@ -397,7 +401,20 @@ number"
             ListBox2.Items.RemoveAt(index)
             ListBox1.SelectedIndex = -1
             ListBox2.SelectedIndex = -1
+            AfterDeleteRow(unknownItemsList, index)
+            AfterDeleteRow(namingFailedItemsList, index)
+            AfterDeleteRow(notExistItemsList, index)
+            AfterDeleteRow(errorItemsList, index)
         End If
+    End Sub
+
+    Private Sub AfterDeleteRow(list As List(Of Integer), idx As Integer)
+        list.Remove(idx)
+        For i = 0 To list.Count - 1
+            If list(i) > idx Then
+                list(i) -= 1
+            End If
+        Next
     End Sub
 
     Private Sub ListBox2_DoubleClick(sender As Object, e As EventArgs) Handles ListBox2.DoubleClick
