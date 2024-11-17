@@ -330,6 +330,7 @@ Partial Class Form1
         Me.concat2.Name = "concat2"
         Me.concat2.Size = New System.Drawing.Size(48, 27)
         Me.concat2.TabIndex = 47
+        Me.concat2.Text = " "
         '
         'Label8
         '
@@ -382,6 +383,7 @@ Partial Class Form1
         Me.concat3.Name = "concat3"
         Me.concat3.Size = New System.Drawing.Size(48, 27)
         Me.concat3.TabIndex = 52
+        Me.concat3.Text = " "
         '
         'Lang3
         '
@@ -580,9 +582,8 @@ Partial Class Form1
         Me.Controls.Add(Me.Label14)
         Me.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog
         Me.Icon = CType(resources.GetObject("$this.Icon"), System.Drawing.Icon)
-        Me.MaximizeBox = False
         Me.Name = "Form1"
-        Me.Text = "Naming and arranging the surahs of the Quran - تسمية وترتيب سور القرآن v2.3"
+        Me.Text = "Naming and arranging the surahs of the Quran - تسمية وترتيب سور القرآن v2.4"
         Me.ResumeLayout(False)
         Me.PerformLayout()
 

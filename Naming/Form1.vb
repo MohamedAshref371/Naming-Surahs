@@ -9,6 +9,7 @@ Public Class Form1
     Dim execOrUndo As Integer
     Dim fname As String
     Private editingTextBox As New TextBox
+    Private SizeX, SizeY As Integer
 
     Private Sub Form1_Load(sender As Object, e As EventArgs) Handles MyBase.Load
         Dim temp As String() = My.Resources.translations.Split("*")
@@ -31,6 +32,9 @@ Public Class Form1
         AddHandler editingTextBox.KeyDown, AddressOf EditingTextBox_KeyDown
         AddHandler editingTextBox.KeyPress, AddressOf TextBoxes_KeyPress
         Controls.Add(editingTextBox)
+
+        SizeX = ClientSize.Width
+        SizeY = ClientSize.Height
 
         If File.Exists(hm + "lang") Then Lg2(sender, e)
     End Sub
@@ -455,5 +459,12 @@ number"
         If "\/:*?""<>|".Contains(e.KeyChar) Then
             e.KeyChar = ""
         End If
+    End Sub
+
+    Private Sub Form1_Resize(sender As Object, e As EventArgs) Handles MyBase.Resize
+        Dim fs As New FormSize(SizeX, SizeY, ClientSize.Width, ClientSize.Height)
+        fs.SetControls(Controls)
+        SizeX = ClientSize.Width
+        SizeY = ClientSize.Height
     End Sub
 End Class
