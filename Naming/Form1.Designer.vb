@@ -260,6 +260,7 @@ Partial Class Form1
         '
         'aboutBtn
         '
+        Me.aboutBtn.Font = New System.Drawing.Font("Tahoma", 9.0!)
         Me.aboutBtn.Location = New System.Drawing.Point(235, 356)
         Me.aboutBtn.Name = "aboutBtn"
         Me.aboutBtn.Size = New System.Drawing.Size(126, 31)
@@ -272,6 +273,7 @@ Partial Class Form1
         Me.audioFilesCheckBox.AutoSize = True
         Me.audioFilesCheckBox.Checked = True
         Me.audioFilesCheckBox.CheckState = System.Windows.Forms.CheckState.Checked
+        Me.audioFilesCheckBox.Font = New System.Drawing.Font("Tahoma", 8.0!)
         Me.audioFilesCheckBox.Location = New System.Drawing.Point(128, 510)
         Me.audioFilesCheckBox.Name = "audioFilesCheckBox"
         Me.audioFilesCheckBox.Size = New System.Drawing.Size(49, 17)
@@ -284,6 +286,7 @@ Partial Class Form1
         Me.videoFilesCheckBox.AutoSize = True
         Me.videoFilesCheckBox.Checked = True
         Me.videoFilesCheckBox.CheckState = System.Windows.Forms.CheckState.Checked
+        Me.videoFilesCheckBox.Font = New System.Drawing.Font("Tahoma", 8.0!)
         Me.videoFilesCheckBox.Location = New System.Drawing.Point(128, 533)
         Me.videoFilesCheckBox.Name = "videoFilesCheckBox"
         Me.videoFilesCheckBox.Size = New System.Drawing.Size(49, 17)
@@ -294,6 +297,7 @@ Partial Class Form1
         'allFilesCheckBox
         '
         Me.allFilesCheckBox.AutoSize = True
+        Me.allFilesCheckBox.Font = New System.Drawing.Font("Tahoma", 8.0!)
         Me.allFilesCheckBox.Location = New System.Drawing.Point(128, 487)
         Me.allFilesCheckBox.Name = "allFilesCheckBox"
         Me.allFilesCheckBox.Size = New System.Drawing.Size(77, 17)
@@ -464,6 +468,7 @@ Partial Class Form1
         'color1desc
         '
         Me.color1desc.AutoSize = True
+        Me.color1desc.Font = New System.Drawing.Font("Tahoma", 8.0!)
         Me.color1desc.Location = New System.Drawing.Point(36, 271)
         Me.color1desc.Name = "color1desc"
         Me.color1desc.Size = New System.Drawing.Size(202, 13)
@@ -473,6 +478,7 @@ Partial Class Form1
         'color2desc
         '
         Me.color2desc.AutoSize = True
+        Me.color2desc.Font = New System.Drawing.Font("Tahoma", 8.0!)
         Me.color2desc.Location = New System.Drawing.Point(36, 293)
         Me.color2desc.Name = "color2desc"
         Me.color2desc.Size = New System.Drawing.Size(263, 13)
@@ -493,6 +499,7 @@ Partial Class Form1
         'color3desc
         '
         Me.color3desc.AutoSize = True
+        Me.color3desc.Font = New System.Drawing.Font("Tahoma", 8.0!)
         Me.color3desc.Location = New System.Drawing.Point(36, 314)
         Me.color3desc.Name = "color3desc"
         Me.color3desc.Size = New System.Drawing.Size(183, 13)
@@ -513,6 +520,7 @@ Partial Class Form1
         'color4desc
         '
         Me.color4desc.AutoSize = True
+        Me.color4desc.Font = New System.Drawing.Font("Tahoma", 8.0!)
         Me.color4desc.Location = New System.Drawing.Point(36, 336)
         Me.color4desc.Name = "color4desc"
         Me.color4desc.Size = New System.Drawing.Size(143, 13)
