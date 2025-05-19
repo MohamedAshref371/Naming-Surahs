@@ -200,6 +200,7 @@ Partial Class Form1
         'ListBox1
         '
         Me.ListBox1.DrawMode = System.Windows.Forms.DrawMode.OwnerDrawFixed
+        Me.ListBox1.Font = New System.Drawing.Font("Tahoma", 8.0!)
         Me.ListBox1.FormattingEnabled = True
         Me.ListBox1.Location = New System.Drawing.Point(381, 5)
         Me.ListBox1.Name = "ListBox1"
@@ -219,6 +220,7 @@ Partial Class Form1
         'ListBox2
         '
         Me.ListBox2.DrawMode = System.Windows.Forms.DrawMode.OwnerDrawFixed
+        Me.ListBox2.Font = New System.Drawing.Font("Tahoma", 8.0!)
         Me.ListBox2.FormattingEnabled = True
         Me.ListBox2.Location = New System.Drawing.Point(592, 5)
         Me.ListBox2.Name = "ListBox2"
