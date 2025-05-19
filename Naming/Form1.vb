@@ -600,5 +600,8 @@ number"
         Label20.Font = New Font("Tahoma", 20.0!)
         Label20.Location = New Point(8, 331)
         Label20.Size = New Size(30, 33)
+        editingTextBox.Font = New Font("Tahoma", 8.0!)
+        editingTextBox.Location = New Point(249, 54)
+        editingTextBox.Size = New Size(100, 20)
     End Sub
 End Class
