@@ -69,6 +69,7 @@ Partial Class Form1
         Me.Label18 = New System.Windows.Forms.Label()
         Me.color4desc = New System.Windows.Forms.Label()
         Me.Label20 = New System.Windows.Forms.Label()
+        Me.editingTextBox = New System.Windows.Forms.TextBox()
         Me.SuspendLayout()
         '
         'TurnOn2
@@ -540,11 +541,22 @@ Partial Class Form1
         Me.Label20.TabIndex = 65
         Me.Label20.Text = "*"
         '
+        'editingTextBox
+        '
+        Me.editingTextBox.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
+        Me.editingTextBox.Font = New System.Drawing.Font("Tahoma", 8.0!)
+        Me.editingTextBox.Location = New System.Drawing.Point(249, 54)
+        Me.editingTextBox.Name = "editingTextBox"
+        Me.editingTextBox.Size = New System.Drawing.Size(100, 20)
+        Me.editingTextBox.TabIndex = 67
+        Me.editingTextBox.Visible = False
+        '
         'Form1
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.ClientSize = New System.Drawing.Size(800, 569)
+        Me.Controls.Add(Me.editingTextBox)
         Me.Controls.Add(Me.color4desc)
         Me.Controls.Add(Me.color3desc)
         Me.Controls.Add(Me.color2desc)
@@ -593,7 +605,7 @@ Partial Class Form1
         Me.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog
         Me.Icon = CType(resources.GetObject("$this.Icon"), System.Drawing.Icon)
         Me.Name = "Form1"
-        Me.Text = "Naming and arranging the surahs of the Quran - تسمية وترتيب سور القرآن v2.4"
+        Me.Text = "Naming and arranging the surahs of the Quran - تسمية وترتيب سور القرآن v2.5"
         Me.ResumeLayout(False)
         Me.PerformLayout()
 
@@ -644,4 +656,5 @@ Partial Class Form1
     Friend WithEvents Label18 As Label
     Friend WithEvents color4desc As Label
     Friend WithEvents Label20 As Label
+    Friend WithEvents editingTextBox As TextBox
 End Class

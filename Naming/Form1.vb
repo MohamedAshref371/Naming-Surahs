@@ -8,7 +8,6 @@ Public Class Form1
     Dim frt As String
     Dim execOrUndo As Integer
     Dim fname As String
-    Private editingTextBox As New TextBox
     Private SizeX, SizeY As Integer
 
     Private Sub Form1_Load(sender As Object, e As EventArgs) Handles MyBase.Load
@@ -25,13 +24,6 @@ Public Class Form1
         Lang1.SelectedIndex = 0
         Lang2.SelectedIndex = 1
         Lang3.SelectedIndex = 2
-
-        editingTextBox.Visible = False
-        editingTextBox.BorderStyle = BorderStyle.FixedSingle
-        AddHandler editingTextBox.Leave, AddressOf EditingTextBox_Leave
-        AddHandler editingTextBox.KeyDown, AddressOf EditingTextBox_KeyDown
-        AddHandler editingTextBox.KeyPress, AddressOf TextBoxes_KeyPress
-        Controls.Add(editingTextBox)
 
         SizeX = ClientSize.Width
         SizeY = ClientSize.Height
@@ -441,7 +433,7 @@ number"
         ListBox1.TopIndex = ListBox2.TopIndex
     End Sub
 
-    Private Sub EditingTextBox_Leave(sender As Object, e As EventArgs)
+    Private Sub EditingTextBox_Leave(sender As Object, e As EventArgs) Handles editingTextBox.Leave
         If ListBox2.SelectedIndex <> -1 And editingTextBox.Text.Trim <> "" Then
             ListBox2.Items(ListBox2.SelectedIndex) = editingTextBox.Text
             unknownItemsList.Remove(ListBox2.SelectedIndex)
@@ -449,13 +441,13 @@ number"
         editingTextBox.Visible = False
     End Sub
 
-    Private Sub EditingTextBox_KeyDown(sender As Object, e As KeyEventArgs)
+    Private Sub EditingTextBox_KeyDown(sender As Object, e As KeyEventArgs) Handles editingTextBox.KeyDown
         If e.KeyCode = Keys.Enter Then
             EditingTextBox_Leave(Nothing, Nothing)
         End If
     End Sub
 
-    Private Sub TextBoxes_KeyPress(sender As Object, e As KeyPressEventArgs) Handles concat1.KeyPress, concat2.KeyPress, concat3.KeyPress, concat4.KeyPress
+    Private Sub TextBoxes_KeyPress(sender As Object, e As KeyPressEventArgs) Handles concat1.KeyPress, concat2.KeyPress, concat3.KeyPress, concat4.KeyPress, editingTextBox.KeyPress
         If "\/:*?""<>|".Contains(e.KeyChar) Then
             e.KeyChar = ""
         End If
